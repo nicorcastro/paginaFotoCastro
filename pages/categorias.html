@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado - usando ruta relativa desde pages/ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Categorías</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex size-full min-h-screen flex-col">
+        
+        <!-- HEADER - Barra superior con botón de regreso y título -->
+        <header class="sticky top-0 z-20 bg-[var(--background-primary)] shadow-sm">
+            <div class="flex items-center justify-between p-4">
+                <!-- BOTÓN DE REGRESO - navega a la página anterior -->
+                <button class="text-[var(--text-primary)]" onclick="goBack()">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                
+                <!-- TÍTULO DE LA PÁGINA - centrado -->
+                <h1 class="text-xl font-bold text-center flex-1 text-[var(--text-primary)]">Categorías</h1>
+                
+                <!-- BOTÓN DE MENÚ HAMBURGUESA -->
+                <button class="text-[var(--text-primary)]" id="menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+            
+            <!-- MENÚ DE NAVEGACIÓN DESPLEGABLE -->
+            <!-- Este menú se muestra/oculta al hacer clic en el botón hamburguesa -->
+            <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md z-30" id="menu">
+                <!-- Enlaces del menú - navegación funcional -->
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="../index.html">Inicio</a>
+                <a class="block px-4 py-3 text-[var(--primary-color)] font-semibold" href="#">Servicios</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="verificar-trabajo.html">Trabajos</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="contacto.html">Contacto</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="acerca-de.html">Conócenos</a>
+            </nav>
+        </header>
+        
+        <!-- CONTENIDO PRINCIPAL - Grid de categorías -->
+        <main class="flex-grow p-4" style="padding-bottom: 80px !important;">
+            
+            <!-- GRID DE CATEGORÍAS - Cuadrícula de 2 columnas -->
+            <!-- Categorías organizadas según especificaciones del usuario -->
+            <div class="grid grid-cols-2 gap-4">
+                
+                <!-- CATEGORÍA 1: MATRIMONIOS -->
+                <a class="group" href="galeria-matrimonios.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Matrimonios</p>
+                </a>
+                
+                <!-- CATEGORÍA 2: 15 AÑOS -->
+                <a class="group" href="galeria-15-anos.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1594998893017-36147743a059?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">15 Años</p>
+                </a>
+                
+                <!-- CATEGORÍA 3: NEW BORN -->
+                <a class="group" href="galeria-newborn.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">New Born</p>
+                </a>
+                
+                <!-- CATEGORÍA 4: PRE-MAMÁ -->
+                <a class="group" href="galeria-premama.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Pre-mamá</p>
+                </a>
+                
+                <!-- CATEGORÍA 5: BEBÉS -->
+                <a class="group" href="galeria-bebes.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Bebés</p>
+                </a>
+                
+                <!-- CATEGORÍA 6: EVENTOS RELIGIOSOS -->
+                <a class="group" href="galeria-eventos-religiosos.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Eventos Religiosos</p>
+                </a>
+                
+                <!-- CATEGORÍA 7: EVENTOS -->
+                <a class="group" href="galeria-eventos.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Eventos</p>
+                </a>
+                
+                <!-- CATEGORÍA 8: FOTO ESTUDIO EN GENERAL -->
+                <a class="group" href="galeria-foto-estudio.html">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("https://images.unsplash.com/photo-1556035840-43e03ce2a7f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">Foto Estudio</p>
+                </a>
+                
+            </div>
+        </main>
+        
+        <!-- FOOTER - Navegación inferior fija -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <!-- Navegación con iconos en la parte inferior -->
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                
+                <!-- ICONO DE INICIO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <p class="text-xs font-medium">Inicio</p>
+                </a>
+                
+                <!-- ICONO DE CATEGORÍAS (activo - color rojo) -->
+                <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+                    <span class="material-symbols-outlined filled">photo_library</span>
+                    <p class="text-xs font-bold">Categorías</p>
+                </a>
+                
+                <!-- ICONO DE TRABAJOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="verificar-trabajo.html">
+                    <span class="material-symbols-outlined">work</span>
+                    <p class="text-xs font-medium">Trabajos</p>
+                </a>
+                
+                <!-- ICONO DE CONTACTO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="contacto.html">
+                    <span class="material-symbols-outlined">mail</span>
+                    <p class="text-xs font-medium">Contacto</p>
+                </a>
+                
+                <!-- ICONO DE CONÓCENOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="acerca-de.html">
+                    <span class="material-symbols-outlined">info</span>
+                    <p class="text-xs font-medium">Conócenos</p>
+                </a>
+                
+            </nav>
+        </footer>
+    </div>
+    
+    <!-- JavaScript personalizado específico para categorías -->
+    <script src="../js/main.js"></script>
+    <script>
+        /* ============================================
+           JAVASCRIPT ESPECÍFICO PARA PÁGINA DE CATEGORÍAS
+           ============================================ */
+        
+        // Función para navegar a una categoría específica
+        function navigateToCategory(categoryName) {
+            // Aquí puedes definir la lógica para navegar a cada categoría
+            console.log('Navegando a categoría:', categoryName);
+            
+            // Ejemplo de navegación condicional
+            switch(categoryName) {
+                case '15-anos':
+                    // Puedes crear una página específica para 15 años
+                    alert('Galería de 15 años próximamente');
+                    break;
+                case 'graduaciones':
+                    // Puedes crear una página específica para graduaciones
+                    alert('Galería de graduaciones próximamente');
+                    break;
+                case 'corporativos':
+                    // Puedes crear una página específica para eventos corporativos
+                    alert('Galería de eventos corporativos próximamente');
+                    break;
+                case 'familias':
+                    // Puedes crear una página específica para familias
+                    alert('Galería de familias próximamente');
+                    break;
+                case 'retratos':
+                    // Puedes crear una página específica para retratos
+                    alert('Galería de retratos próximamente');
+                    break;
+                case 'productos':
+                    // Puedes crear una página específica para productos
+                    alert('Galería de productos próximamente');
+                    break;
+                case 'arquitectura':
+                    // Puedes crear una página específica para arquitectura
+                    alert('Galería de arquitectura próximamente');
+                    break;
+                default:
+                    alert('Categoría no encontrada');
+            }
+        }
+        
+        // Función de navegación hacia atrás mejorada
+        function goBack() {
+            // Si hay historial, regresar, sino ir al inicio
+            if (document.referrer && document.referrer !== '') {
+                history.back();
+            } else {
+                window.location.href = '../index.html';
+            }
+        }
+    </script>
+</body>
+</html>

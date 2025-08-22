@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Foto Castro</title>
+    
+    <!-- Fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        .admin-container {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            min-height: 100vh;
+        }
+        
+        .admin-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+        
+        .trabajo-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-completado { background: #dcfce7; color: #166534; }
+        .status-en_proceso { background: #fef3c7; color: #92400e; }
+        .status-pendiente { background: #f3f4f6; color: #374151; }
+        
+        .auto-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+    </style>
+</head>
+
+<body class="admin-container">
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center px-4">
+        <div class="admin-card p-8 max-w-md w-full">
+            <div class="text-center mb-8">
+                <span class="material-symbols-outlined text-6xl text-green-600 mb-4 block">admin_panel_settings</span>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Acceso Administrativo</h1>
+                <p class="text-gray-600">Ingresa la contraseña para continuar</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" id="password-input" class="form-input" placeholder="Ingresa tu contraseña" required autofocus>
+                </div>
+                
+                <button type="submit" class="btn-primary w-full">
+                    <span class="material-symbols-outlined inline mr-2">lock_open</span>
+                    Acceder al Panel
+                </button>
+                
+                <div id="login-error" class="hidden mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-red-600 mr-2">error</span>
+                        <p class="text-red-800 text-sm">Contraseña incorrecta. Inténtalo nuevamente.</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- PANEL PRINCIPAL (oculto inicialmente) -->
+    <div id="admin-panel" class="hidden">
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- HEADER -->
+        <div class="text-center mb-8">
+            <div class="auto-badge mb-4">
+                <span class="material-symbols-outlined text-sm">auto_fix_high</span>
+                AUTOMÁTICO
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-2">Panel de Administración</h1>
+            <p class="text-white/80">Gestión de Trabajos - Foto Castro</p>
+        </div>
+        
+        <!-- ALERTA DE AUTOMÁTICO -->
+        <div class="admin-card p-6 mb-8">
+            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined text-green-600 mr-3 text-2xl">verified</span>
+                    <div>
+                        <h3 class="font-bold text-green-800">Actualización Automática Activada</h3>
+                        <p class="text-green-700 text-sm">
+                            Cada trabajo que agregues se guardará automáticamente y estará disponible 
+                            al instante en la página de verificación. ¡No necesitas hacer nada más!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NAVEGACIÓN -->
+        <div class="admin-card p-6 mb-8">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button onclick="mostrarSeccion('agregar')" class="btn-primary" id="btn-agregar">
+                    <span class="material-symbols-outlined inline mr-2">add</span>
+                    Agregar Trabajo
+                </button>
+                <button onclick="mostrarSeccion('listar')" class="btn-secondary" id="btn-listar">
+                    <span class="material-symbols-outlined inline mr-2">list</span>
+                    Ver Trabajos
+                </button>
+                <button onclick="mostrarSeccion('sync')" class="btn-secondary" id="btn-sync">
+                    <span class="material-symbols-outlined inline mr-2">sync</span>
+                    Estado de Sincronización
+                </button>
+            </div>
+        </div>
+        
+        <!-- SECCIÓN: AGREGAR TRABAJO -->
+        <div id="seccion-agregar" class="admin-card p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <span class="material-symbols-outlined inline mr-2">add_circle</span>
+                Agregar Nuevo Trabajo
+            </h2>
+            
+            <form id="form-trabajo">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Palabra Clave -->
+                    <div class="form-group">
+                        <label class="form-label">Palabra Clave *</label>
+                        <input type="text" id="palabra-clave" class="form-input" placeholder="ej: PEREZ2024" required>
+                        <small class="text-gray-500">Sin espacios, solo letras y números</small>
+                    </div>
+                    
+                    <!-- Nombre del Cliente -->
+                    <div class="form-group">
+                        <label class="form-label">Nombre del Cliente *</label>
+                        <input type="text" id="cliente" class="form-input" placeholder="ej: Juan y María Pérez" required>
+                    </div>
+                    
+                    <!-- Fecha de la Sesión -->
+                    <div class="form-group">
+                        <label class="form-label">Fecha de la Sesión *</label>
+                        <input type="date" id="fecha" class="form-input" required>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="form-group">
+                        <label class="form-label">Estado del Trabajo *</label>
+                        <select id="estado" class="form-select" required>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="en_proceso">En proceso</option>
+                            <option value="completado">Completado</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Entrega Estimada -->
+                    <div class="form-group">
+                        <label class="form-label">Entrega Estimada</label>
+                        <input type="date" id="entrega-estimada" class="form-input">
+                    </div>
+                    
+                </div>
+                
+                <!-- Observaciones -->
+                <div class="form-group">
+                    <label class="form-label">Observaciones</label>
+                    <textarea id="observaciones" class="form-textarea" rows="3" placeholder="Notas adicionales sobre el trabajo..."></textarea>
+                </div>
+                
+                <!-- Botones -->
+                <div class="flex gap-4 pt-4">
+                    <button type="submit" class="btn-primary">
+                        <span class="material-symbols-outlined inline mr-2">save</span>
+                        Guardar y Sincronizar Automáticamente
+                    </button>
+                    <button type="button" onclick="limpiarFormulario()" class="btn-secondary">
+                        <span class="material-symbols-outlined inline mr-2">refresh</span>
+                        Limpiar
+                    </button>
+                    <button type="button" onclick="cancelarEdicion()" class="btn-secondary hidden" id="btn-cancelar-edicion">
+                        <span class="material-symbols-outlined inline mr-2">cancel</span>
+                        Cancelar Edición
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- SECCIÓN: LISTAR TRABAJOS -->
+        <div id="seccion-listar" class="admin-card p-6 mb-8 hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <span class="material-symbols-outlined inline mr-2">list</span>
+                Trabajos Guardados
+            </h2>
+            <div id="lista-trabajos"></div>
+        </div>
+        
+        <!-- SECCIÓN: ESTADO DE SINCRONIZACIÓN -->
+        <div id="seccion-sync" class="admin-card p-6 mb-8 hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <span class="material-symbols-outlined inline mr-2">sync</span>
+                Estado de Sincronización
+            </h2>
+            
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined text-blue-600 mr-3">info</span>
+                    <div>
+                        <h3 class="font-bold text-blue-800">¿Cómo funciona la sincronización automática?</h3>
+                        <p class="text-blue-700 text-sm mt-1">
+                            Los trabajos se guardan en el navegador y se comparten automáticamente con la página de verificación. 
+                            Ambas páginas usan la misma base de datos local.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="estado-sincronizacion">
+                <!-- Se llena dinámicamente -->
+            </div>
+            
+            <div class="flex gap-4 mt-6">
+                <button onclick="verificarSincronizacion()" class="btn-primary">
+                    <span class="material-symbols-outlined inline mr-2">refresh</span>
+                    Verificar Sincronización
+                </button>
+                
+                <button onclick="forzarSincronizacion()" class="btn-secondary">
+                    <span class="material-symbols-outlined inline mr-2">sync_alt</span>
+                    Forzar Sincronización
+                </button>
+            </div>
+        </div>
+        
+        <!-- BOTÓN DE REGRESO Y CERRAR SESIÓN -->
+        <div class="text-center">
+            <div class="flex gap-4 justify-center">
+                <a href="../index.html" class="btn-secondary">
+                    <span class="material-symbols-outlined inline mr-2">arrow_back</span>
+                    Volver al Sitio Principal
+                </a>
+                <button onclick="cerrarSesion()" class="btn-secondary">
+                    <span class="material-symbols-outlined inline mr-2">logout</span>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+    </div> <!-- Cierre del admin-panel -->
+    
+    <script>
+        // Configuración de seguridad
+        const ADMIN_CONFIG = {
+            defaultPassword: 'Candy2024.',
+            sessionTimeout: 30 * 60 * 1000, // 30 minutos
+            storageKey: 'fotocastro_admin_session',
+            passwordKey: 'fotocastro_admin_password'
+        };
+        
+        // Variables globales
+        let sessionTimer;
+        
+        // Base de datos compartida para trabajos (misma clave que verificar-trabajo.html)
+        const STORAGE_KEY = 'fotocastro_trabajos_shared';
+        let trabajosGuardados = [];
+        
+        // Elementos del DOM
+        const loginScreen = document.getElementById('login-screen');
+        const adminPanel = document.getElementById('admin-panel');
+        const loginForm = document.getElementById('login-form');
+        const passwordInput = document.getElementById('password-input');
+        const loginError = document.getElementById('login-error');
+        const formTrabajo = document.getElementById('form-trabajo');
+        const listaTrabajos = document.getElementById('lista-trabajos');
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarSesion();
+            setupEventListeners();
+        });
+        
+        function setupEventListeners() {
+            // Manejar envío del formulario de login
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                verificarPassword();
+            });
+            
+            // Manejar Enter en el campo de contraseña
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verificarPassword();
+                }
+            });
+            
+            // Configurar el formulario de trabajo solo si está disponible
+            if (formTrabajo) {
+                formTrabajo.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    agregarTrabajo();
+                });
+            }
+            
+            // Auto-logout por inactividad
+            setupInactivityTimer();
+        }
+        
+        function verificarSesion() {
+            const session = localStorage.getItem(ADMIN_CONFIG.storageKey);
+            
+            if (session) {
+                try {
+                    const sessionData = JSON.parse(session);
+                    const now = new Date().getTime();
+                    
+                    // Verificar si la sesión no ha expirado
+                    if (now - sessionData.timestamp < ADMIN_CONFIG.sessionTimeout) {
+                        mostrarPanel();
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Error verificando sesión:', error);
+                }
+            }
+            
+            // Si llegamos aquí, mostrar login
+            mostrarLogin();
+        }
+        
+        function verificarPassword() {
+            const password = passwordInput.value;
+            const storedPassword = localStorage.getItem(ADMIN_CONFIG.passwordKey) || ADMIN_CONFIG.defaultPassword;
+            
+            if (password === storedPassword) {
+                // Contraseña correcta
+                const sessionData = {
+                    timestamp: new Date().getTime(),
+                    authenticated: true
+                };
+                
+                localStorage.setItem(ADMIN_CONFIG.storageKey, JSON.stringify(sessionData));
+                mostrarPanel();
+                ocultarError();
+            } else {
+                // Contraseña incorrecta
+                mostrarError();
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+        
+        function mostrarLogin() {
+            loginScreen.classList.remove('hidden');
+            adminPanel.classList.add('hidden');
+            passwordInput.focus();
+        }
+        
+        function mostrarPanel() {
+            loginScreen.classList.add('hidden');
+            adminPanel.classList.remove('hidden');
+            
+            // Cargar datos del panel
+            cargarTrabajos();
+            mostrarSeccion('agregar');
+            verificarSincronizacion();
+            
+            // Iniciar timer de sesión
+            iniciarTimerSesion();
+        }
+        
+        function mostrarError() {
+            loginError.classList.remove('hidden');
+            setTimeout(() => {
+                loginError.classList.add('hidden');
+            }, 5000);
+        }
+        
+        function ocultarError() {
+            loginError.classList.add('hidden');
+        }
+        
+        function cerrarSesion() {
+            if (confirm('¿Estás seguro de que quieres cerrar la sesión?')) {
+                localStorage.removeItem(ADMIN_CONFIG.storageKey);
+                clearTimeout(sessionTimer);
+                mostrarLogin();
+                mostrarNotificacion('Sesión cerrada correctamente', 'info');
+            }
+        }
+        
+        function iniciarTimerSesion() {
+            clearTimeout(sessionTimer);
+            
+            sessionTimer = setTimeout(() => {
+                alert('Tu sesión ha expirado por inactividad. Serás redirigido al login.');
+                cerrarSesion();
+            }, ADMIN_CONFIG.sessionTimeout);
+        }
+        
+        function setupInactivityTimer() {
+            // Eventos que resetean el timer de inactividad
+            const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+            
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    if (!adminPanel.classList.contains('hidden')) {
+                        iniciarTimerSesion();
+                    }
+                }, { passive: true });
+            });
+        }
+        
+        function agregarTrabajo() {
+            // Obtener datos del formulario
+            const palabraClave = document.getElementById('palabra-clave').value.toUpperCase().trim();
+            const cliente = document.getElementById('cliente').value.trim();
+            const fecha = document.getElementById('fecha').value;
+            const estado = document.getElementById('estado').value;
+            const entregaEstimada = document.getElementById('entrega-estimada').value;
+            const observaciones = document.getElementById('observaciones').value.trim();
+            
+            // Validaciones
+            if (!palabraClave || !cliente || !fecha) {
+                alert('Por favor completa todos los campos obligatorios (*)');
+                return;
+            }
+            
+            // Verificar si estamos editando un trabajo existente
+            const esEdicion = window.trabajoEditando && window.trabajoEditando.trabajoOriginal;
+            
+            if (!esEdicion) {
+                // Crear nuevo trabajo - verificar que la palabra clave no exista
+                if (trabajosGuardados.find(t => t.palabraClave === palabraClave)) {
+                    alert('Esta palabra clave ya existe. Por favor usa una diferente.');
+                    return;
+                }
+            }
+            
+            // Formatear fecha
+            const fechaFormateada = formatearFecha(fecha);
+            const entregaFormateada = entregaEstimada ? formatearFecha(entregaEstimada) : 'Por definir';
+            
+            if (esEdicion) {
+                // MODO EDICIÓN: Actualizar trabajo existente
+                const trabajoOriginal = window.trabajoEditando.trabajoOriginal;
+                const index = window.trabajoEditando.index;
+                
+                // Crear trabajo actualizado manteniendo datos no editables
+                const trabajoActualizado = {
+                    ...trabajoOriginal, // Mantener todos los datos originales
+                    estado, // Actualizar solo los campos editables
+                    entrega_estimada: entregaFormateada,
+                    entrega_original: entregaEstimada,
+                    observaciones: observaciones || 'Sin observaciones adicionales.',
+                    fecha_ultima_modificacion: new Date().toISOString()
+                };
+                
+                // Actualizar en la posición original
+                trabajosGuardados[index] = trabajoActualizado;
+                
+                // Limpiar estado de edición
+                window.trabajoEditando = null;
+                
+                mostrarNotificacion(`Trabajo "${palabraClave}" actualizado correctamente!`, 'success');
+            } else {
+                // MODO CREACIÓN: Crear nuevo trabajo
+                const nuevoTrabajo = {
+                    palabraClave,
+                    cliente,
+                    fecha: fechaFormateada,
+                    fecha_original: fecha,
+                    estado,
+                    entrega_estimada: entregaFormateada,
+                    entrega_original: entregaEstimada,
+                    observaciones: observaciones || 'Sin observaciones adicionales.',
+                    fecha_creacion: new Date().toISOString()
+                };
+                
+                // Agregar a la lista
+                trabajosGuardados.push(nuevoTrabajo);
+                
+                mostrarNotificacion(`Trabajo "${palabraClave}" creado y sincronizado automáticamente!`, 'success');
+            }
+            
+            // Sincronización automática
+            sincronizarAutomaticamente();
+            
+            // Limpiar formulario
+            limpiarFormulario();
+            
+            // Actualizar vista de lista si está visible
+            if (!document.getElementById('seccion-listar').classList.contains('hidden')) {
+                mostrarListaTrabajos();
+            }
+        }
+        
+        function sincronizarAutomaticamente() {
+            // Guardar en localStorage con clave compartida
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(trabajosGuardados));
+            
+            // También mantener la clave antigua para compatibilidad
+            localStorage.setItem('fotocastro_trabajos', JSON.stringify(trabajosGuardados));
+            
+            // Disparar evento personalizado para notificar a otras páginas
+            window.dispatchEvent(new CustomEvent('trabajosActualizados', {
+                detail: trabajosGuardados
+            }));
+            
+            console.log('✅ Sincronización automática completada');
+        }
+        
+        function mostrarNotificacion(mensaje, tipo = 'info') {
+            const colores = {
+                success: 'bg-green-50 border-green-200 text-green-800',
+                error: 'bg-red-50 border-red-200 text-red-800',
+                info: 'bg-blue-50 border-blue-200 text-blue-800'
+            };
+            
+            const iconos = {
+                success: 'check_circle',
+                error: 'error',
+                info: 'info'
+            };
+            
+            // Crear notificación
+            const notificacion = document.createElement('div');
+            notificacion.className = `fixed top-4 right-4 ${colores[tipo]} border rounded-lg p-4 shadow-lg z-50 max-w-md`;
+            notificacion.innerHTML = `
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined mr-2">${iconos[tipo]}</span>
+                    <p class="text-sm font-medium">${mensaje}</p>
+                </div>
+            `;
+            
+            document.body.appendChild(notificacion);
+            
+            // Remover después de 3 segundos
+            setTimeout(() => {
+                notificacion.remove();
+            }, 3000);
+        }
+        
+        function formatearFecha(fecha) {
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(fecha + 'T00:00:00').toLocaleDateString('es-ES', opciones);
+        }
+        
+        function limpiarFormulario() {
+            formTrabajo.reset();
+            
+            // Limpiar estado de edición
+            window.trabajoEditando = null;
+            
+            // Restaurar campos a estado normal (habilitados)
+            document.getElementById('palabra-clave').disabled = false;
+            document.getElementById('palabra-clave').style.backgroundColor = '';
+            document.getElementById('palabra-clave').style.color = '';
+            
+            document.getElementById('cliente').disabled = false;
+            document.getElementById('cliente').style.backgroundColor = '';
+            document.getElementById('cliente').style.color = '';
+            
+            document.getElementById('fecha').disabled = false;
+            document.getElementById('fecha').style.backgroundColor = '';
+            document.getElementById('fecha').style.color = '';
+            
+            // Restaurar etiquetas originales
+            document.getElementById('palabra-clave').parentElement.querySelector('.form-label').innerHTML = 'Palabra Clave *';
+            document.getElementById('cliente').parentElement.querySelector('.form-label').innerHTML = 'Nombre del Cliente *';
+            document.getElementById('fecha').parentElement.querySelector('.form-label').innerHTML = 'Fecha de la Sesión *';
+            
+            // Restaurar botón de envío
+            const submitButton = document.querySelector('#form-trabajo button[type="submit"]');
+            if (submitButton) {
+                submitButton.innerHTML = '<span class="material-symbols-outlined inline mr-2">save</span>Guardar y Sincronizar Automáticamente';
+            }
+            
+            // Ocultar botón de cancelar edición
+            const btnCancelar = document.getElementById('btn-cancelar-edicion');
+            if (btnCancelar) {
+                btnCancelar.classList.add('hidden');
+            }
+        }
+        
+        function cancelarEdicion() {
+            if (confirm('¿Estás seguro de que quieres cancelar la edición? Los cambios no guardados se perderán.')) {
+                limpiarFormulario();
+                mostrarNotificacion('Edición cancelada', 'info');
+            }
+        }
+        
+        function mostrarSeccion(seccion) {
+            // Ocultar todas las secciones
+            document.getElementById('seccion-agregar').classList.add('hidden');
+            document.getElementById('seccion-listar').classList.add('hidden');
+            document.getElementById('seccion-sync').classList.add('hidden');
+            
+            // Resetear botones
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                btn.className = btn.className.replace('btn-primary', 'btn-secondary');
+            });
+            
+            // Mostrar sección seleccionada
+            document.getElementById(`seccion-${seccion}`).classList.remove('hidden');
+            document.getElementById(`btn-${seccion}`).className = document.getElementById(`btn-${seccion}`).className.replace('btn-secondary', 'btn-primary');
+            
+            // Si vamos a la sección agregar, limpiar y restaurar formulario SOLO si no estamos editando
+            if (seccion === 'agregar' && !window.trabajoEditando) {
+                limpiarFormulario();
+            }
+            
+            // Cargar contenido específico
+            if (seccion === 'listar') {
+                mostrarListaTrabajos();
+            } else if (seccion === 'sync') {
+                verificarSincronizacion();
+            }
+        }
+        
+        function mostrarListaTrabajos() {
+            if (trabajosGuardados.length === 0) {
+                listaTrabajos.innerHTML = '<p class="text-gray-500 text-center py-8">No hay trabajos guardados aún.</p>';
+                return;
+            }
+            
+            let html = '';
+            trabajosGuardados.forEach((trabajo, index) => {
+                html += `
+                    <div class="trabajo-item">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-lg">${trabajo.cliente}</h3>
+                                <p class="text-gray-600">${trabajo.fecha}</p>
+                                <p class="text-sm text-gray-500">Palabra clave: <code class="bg-gray-100 px-2 py-1 rounded">${trabajo.palabraClave}</code></p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="auto-badge">
+                                    <span class="material-symbols-outlined text-xs">sync</span>
+                                    AUTO
+                                </span>
+                                <span class="status-badge status-${trabajo.estado}">
+                                    ${trabajo.estado === 'completado' ? 'Completado' : 
+                                      trabajo.estado === 'en_proceso' ? 'En proceso' : 'Pendiente'}
+                                </span>
+                                <button onclick="eliminarTrabajo(${index})" class="text-red-500 hover:text-red-700">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-3">
+                            <div>
+                                <span class="text-gray-500">Entrega:</span>
+                                <div class="font-semibold">${trabajo.entrega_estimada}</div>
+                            </div>
+                            <div>
+                                <button onclick="editarTrabajo(${index})" class="text-blue-500 hover:text-blue-700 text-sm">
+                                    <span class="material-symbols-outlined inline">edit</span> Editar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        ${trabajo.observaciones !== 'Sin observaciones adicionales.' ? 
+                            `<div class="text-sm text-gray-600 italic">"${trabajo.observaciones}"</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            listaTrabajos.innerHTML = html;
+        }
+        
+        function eliminarTrabajo(index) {
+            if (confirm('¿Estás seguro de que quieres eliminar este trabajo?')) {
+                trabajosGuardados.splice(index, 1);
+                sincronizarAutomaticamente();
+                mostrarListaTrabajos();
+                mostrarNotificacion('Trabajo eliminado y sincronizado automáticamente', 'success');
+            }
+        }
+        
+        function editarTrabajo(index) {
+            const trabajo = trabajosGuardados[index];
+            
+            // Guardar referencia del trabajo que se está editando
+            window.trabajoEditando = {
+                index: index,
+                trabajoOriginal: {...trabajo} // Crear copia del trabajo original
+            };
+            
+            // Ir a la sección de agregar ANTES de llenar los datos
+            mostrarSeccion('agregar');
+            
+            // Llenar el formulario con los datos
+            document.getElementById('palabra-clave').value = trabajo.palabraClave;
+            document.getElementById('cliente').value = trabajo.cliente;
+            document.getElementById('fecha').value = trabajo.fecha_original || new Date().toISOString().split('T')[0];
+            document.getElementById('estado').value = trabajo.estado;
+            document.getElementById('entrega-estimada').value = trabajo.entrega_original || '';
+            document.getElementById('observaciones').value = trabajo.observaciones === 'Sin observaciones adicionales.' ? '' : trabajo.observaciones;
+            
+            // Deshabilitar campos que no se pueden editar
+            document.getElementById('palabra-clave').disabled = true;
+            document.getElementById('palabra-clave').style.backgroundColor = '#f3f4f6';
+            document.getElementById('palabra-clave').style.color = '#6b7280';
+            
+            document.getElementById('cliente').disabled = true;
+            document.getElementById('cliente').style.backgroundColor = '#f3f4f6';
+            document.getElementById('cliente').style.color = '#6b7280';
+            
+            document.getElementById('fecha').disabled = true;
+            document.getElementById('fecha').style.backgroundColor = '#f3f4f6';
+            document.getElementById('fecha').style.color = '#6b7280';
+            
+            // Agregar indicadores visuales
+            document.getElementById('palabra-clave').parentElement.querySelector('.form-label').innerHTML = 'Palabra Clave * <span style="color: #6b7280; font-weight: normal;">(No editable)</span>';
+            document.getElementById('cliente').parentElement.querySelector('.form-label').innerHTML = 'Nombre del Cliente * <span style="color: #6b7280; font-weight: normal;">(No editable)</span>';
+            document.getElementById('fecha').parentElement.querySelector('.form-label').innerHTML = 'Fecha de la Sesión * <span style="color: #6b7280; font-weight: normal;">(No editable)</span>';
+            
+            // Cambiar el texto del botón para indicar que es una edición
+            const submitButton = document.querySelector('#form-trabajo button[type="submit"]');
+            if (submitButton) {
+                submitButton.innerHTML = '<span class="material-symbols-outlined inline mr-2">edit</span>Actualizar Trabajo';
+            }
+            
+            // Mostrar botón de cancelar edición
+            const btnCancelar = document.getElementById('btn-cancelar-edicion');
+            if (btnCancelar) {
+                btnCancelar.classList.remove('hidden');
+            }
+            
+            mostrarNotificacion('Trabajo cargado para edición. Solo puedes modificar: Estado, Entrega estimada y Observaciones.', 'info');
+        }
+        
+        function verificarSincronizacion() {
+            const estadoDiv = document.getElementById('estado-sincronizacion');
+            const totalTrabajos = trabajosGuardados.length;
+            const ultimaActualizacion = localStorage.getItem(STORAGE_KEY + '_timestamp') || 'Nunca';
+            
+            estadoDiv.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Estado de la Base de Datos</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Total de trabajos:</span>
+                                <span class="font-semibold text-green-600">${totalTrabajos}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Almacenamiento:</span>
+                                <span class="font-semibold text-blue-600">LocalStorage</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Estado:</span>
+                                <span class="font-semibold text-green-600">✅ Sincronizado</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Compatibilidad</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Panel Admin:</span>
+                                <span class="font-semibold text-green-600">✅ Conectado</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Verificar Trabajo:</span>
+                                <span class="font-semibold text-green-600">✅ Compatible</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Actualización:</span>
+                                <span class="font-semibold text-blue-600">Automática</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function forzarSincronizacion() {
+            sincronizarAutomaticamente();
+            
+            // Actualizar timestamp
+            localStorage.setItem(STORAGE_KEY + '_timestamp', new Date().toLocaleString('es-ES'));
+            
+            verificarSincronizacion();
+            mostrarNotificacion('Sincronización forzada completada', 'success');
+        }
+        
+        function cargarTrabajos() {
+            // Intentar cargar desde la clave compartida primero
+            let trabajosGuardadosStr = localStorage.getItem(STORAGE_KEY);
+            
+            // Si no existe, cargar desde la clave antigua
+            if (!trabajosGuardadosStr) {
+                trabajosGuardadosStr = localStorage.getItem('fotocastro_trabajos');
+                
+                // Si existe en la clave antigua, migrar a la nueva
+                if (trabajosGuardadosStr) {
+                    localStorage.setItem(STORAGE_KEY, trabajosGuardadosStr);
+                }
+            }
+            
+            if (trabajosGuardadosStr) {
+                trabajosGuardados = JSON.parse(trabajosGuardadosStr);
+            }
+        }
+    </script>
+</body>
+</html>

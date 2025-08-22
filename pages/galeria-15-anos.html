@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Foto Castro - 15 Años</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="relative flex size-full min-h-screen flex-col">
+        
+        <!-- HEADER -->
+        <header class="sticky top-0 z-20 bg-[var(--background-primary)] shadow-sm">
+            <div class="flex items-center justify-between p-4">
+                <button class="text-[var(--text-primary)]" onclick="goBack()">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h1 class="text-xl font-bold text-center flex-1 text-[var(--text-primary)]">15 Años</h1>
+                <button class="text-[var(--text-primary)]" id="menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+            
+            <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md z-30" id="menu">
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="../index.html">Inicio</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="categorias.html">Servicios</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="verificar-trabajo.html">Trabajos</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="contacto.html">Contacto</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="acerca-de.html">Conócenos</a>
+            </nav>
+        </header>
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="flex-grow p-4" style="padding-bottom: 80px !important;">
+            
+            <!-- Descripción del servicio -->
+            <div class="mb-6 text-center">
+                <p class="text-[var(--text-secondary)] text-base">Celebra tus quince años con fotografías únicas que capturen la magia de este momento especial.</p>
+            </div>
+            
+            <!-- Grid de fotos -->
+            <div class="grid grid-cols-2 gap-4" id="galeria">
+                
+                <div class="overflow-hidden rounded-lg">
+                    <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 hover:scale-105 cursor-pointer" 
+                         style="background-image: url('https://images.unsplash.com/photo-1594998893017-36147743a059?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')"
+                         onclick="abrirModal(0)"
+                         title="Sesión de 15 años - Foto de muestra">
+                        <div class="w-full h-full bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 flex items-end">
+                            <div class="p-2 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <span class="text-xs">📷 Sesión de 15 años</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mensaje de más fotos disponibles -->
+                <div class="flex items-center justify-center p-4 border-2 border-dashed border-[var(--border-color)] rounded-lg">
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-2xl text-[var(--text-secondary)] mb-2 block">add_photo_alternate</span>
+                        <p class="text-xs text-[var(--text-secondary)]">Más fotos<br>próximamente</p>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+        
+        <!-- BOTÓN DE CONTACTO POR WHATSAPP -->
+        <div class="p-4" style="padding-bottom: 80px;">
+            <!-- Botón verde de WhatsApp con enlace personalizable -->
+            <a class="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 px-6 py-3 text-white shadow-lg transition-transform hover:scale-105" 
+               href="https://wa.me/573124167936?text=¡Hola%20Foto%20Castro!%20🎂✨%20Me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20de%20fotografía%20para%2015%20años.%20Me%20gustaría%20obtener%20información%20sobre%20paquetes,%20precios%20y%20disponibilidad.%20¡Espero%20su%20respuesta!%20💫">
+                <!-- Icono de WhatsApp -->
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                </svg>
+                <!-- Texto del botón (puedes modificar este texto) -->
+                <span class="font-bold">Contactar por WhatsApp</span>
+            </a>
+        </div>
+        
+        <!-- FOOTER -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <p class="text-xs font-medium">Inicio</p>
+                </a>
+                <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="categorias.html">
+                    <span class="material-symbols-outlined filled">photo_library</span>
+                    <p class="text-xs font-bold">Categorías</p>
+                </a>
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="verificar-trabajo.html">
+                    <span class="material-symbols-outlined">work</span>
+                    <p class="text-xs font-medium">Trabajos</p>
+                </a>
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="contacto.html">
+                    <span class="material-symbols-outlined">mail</span>
+                    <p class="text-xs font-medium">Contacto</p>
+                </a>
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="acerca-de.html">
+                    <span class="material-symbols-outlined">info</span>
+                    <p class="text-xs font-medium">Conócenos</p>
+                </a>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- Modal para ver imágenes en grande -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onclick="cerrarModal()">
+        <div class="relative max-w-4xl max-h-full p-4" onclick="event.stopPropagation()">
+            <img id="modal-imagen" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
+            
+            <!-- Controles del modal -->
+            <div class="absolute top-4 right-4 space-x-2">
+                <button onclick="imagenAnterior()" class="bg-white bg-opacity-20 text-white p-2 rounded-full hover:bg-opacity-30 transition-all">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button onclick="imagenSiguiente()" class="bg-white bg-opacity-20 text-white p-2 rounded-full hover:bg-opacity-30 transition-all">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+                <button onclick="cerrarModal()" class="bg-white bg-opacity-20 text-white p-2 rounded-full hover:bg-opacity-30 transition-all">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // Lista de imágenes para el modal
+        const imagenes = [
+            'https://images.unsplash.com/photo-1594998893017-36147743a059?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+        ];
+        let imagenActual = 0;
+
+        // Funciones del menú
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('hidden');
+        });
+
+        function goBack() {
+            if (document.referrer && document.referrer !== '') {
+                history.back();
+            } else {
+                window.location.href = 'categorias.html';
+            }
+        }
+
+        // Funciones del modal
+        function abrirModal(index) {
+            imagenActual = index;
+            mostrarImagenModal();
+            document.getElementById('modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function mostrarImagenModal() {
+            const imagen = imagenes[imagenActual];
+            const modalImagen = document.getElementById('modal-imagen');
+            
+            modalImagen.src = imagen;
+            modalImagen.alt = "Sesión de 15 años - Foto de muestra";
+        }
+
+        function imagenAnterior() {
+            imagenActual = (imagenActual - 1 + imagenes.length) % imagenes.length;
+            mostrarImagenModal();
+        }
+
+        function imagenSiguiente() {
+            imagenActual = (imagenActual + 1) % imagenes.length;
+            mostrarImagenModal();
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('modal').classList.contains('hidden')) return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    cerrarModal();
+                    break;
+                case 'ArrowLeft':
+                    imagenAnterior();
+                    break;
+                case 'ArrowRight':
+                    imagenSiguiente();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

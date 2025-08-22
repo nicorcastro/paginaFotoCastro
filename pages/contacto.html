@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado - usando ruta relativa desde pages/ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Contacto</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    
+    <!-- Estilos específicos para la página de contacto -->
+    <style>
+        /* ============================================
+           ESTILOS ESPECÍFICOS PARA PÁGINA DE CONTACTO
+           ============================================ */
+        
+        /* Variables adicionales para esta página */
+        :root {
+            --primary-hover-color: #c0262d;
+            --input-focus-shadow: rgba(234, 42, 51, 0.1);
+            --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Estilos para campos de formulario */
+        .form-input, .form-textarea {
+            background-color: var(--background-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--input-focus-shadow);
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        /* Estilos para botón principal */
+        .btn-primary {
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Estilos para tarjetas de contacto */
+        .contact-card {
+            background-color: var(--background-primary);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            box-shadow: var(--card-shadow);
+            transform: translateY(-1px);
+        }
+        
+        /* Estilos para iconos sociales */
+        .social-icon {
+            background-color: var(--background-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .social-card:hover .social-icon {
+            transform: scale(1.1);
+        }
+        
+        /* Animación de envío exitoso */
+        .success-message {
+            background-color: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex size-full min-h-screen flex-col justify-between group/design-root overflow-x-hidden">
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="flex-grow" style="padding-bottom: 80px !important;">
+            
+            <!-- HEADER - Barra superior con botón de regreso y título -->
+            <header class="sticky top-0 z-20 bg-[var(--background-primary)] shadow-sm border-b border-[var(--border-color)]">
+                <div class="flex items-center justify-between p-4">
+                    <!-- BOTÓN DE REGRESO - navega a la página anterior -->
+                    <button class="text-[var(--text-primary)]" onclick="goBack()">
+                        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                    </button>
+                    
+                    <!-- TÍTULO DE LA PÁGINA -->
+                    <h1 class="text-lg font-bold text-[var(--text-primary)] absolute left-1/2 -translate-x-1/2">Contacto</h1>
+                    
+                    <!-- BOTÓN DE MENÚ HAMBURGUESA -->
+                    <button class="text-[var(--text-primary)]" id="menu-button">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+                
+                <!-- MENÚ DE NAVEGACIÓN DESPLEGABLE -->
+                <!-- Este menú se muestra/oculta al hacer clic en el botón hamburguesa -->
+                <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md z-30" id="menu">
+                    <!-- Enlaces del menú - navegación funcional -->
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="../index.html">Inicio</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="categorias.html">Servicios</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="verificar-trabajo.html">Trabajos</a>
+                    <a class="block px-4 py-3 text-[var(--primary-color)] font-semibold" href="#">Contacto</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="acerca-de.html">Conócenos</a>
+                </nav>
+            </header>
+            
+            <!-- CONTENIDO DE LA PÁGINA -->
+            <div class="p-4 space-y-6">
+                
+                <!-- INTRODUCCIÓN -->
+                <div class="text-center space-y-4 mb-8">
+                    <span class="material-symbols-outlined text-6xl text-[var(--primary-color)]">photo_camera</span>
+                    <h2 class="text-2xl font-bold text-[var(--text-primary)]">¡Conecta con nosotros!</h2>
+                    <p class="text-[var(--text-secondary)] text-base">
+                        Contáctanos directamente para conocer nuestros servicios de fotografía profesional.
+                        Estamos aquí para capturar tus momentos más especiales.
+                    </p>
+                </div>
+                
+                <!-- INFORMACIÓN DE CONTACTO -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-[var(--text-primary)]">Información de contacto</h2>
+                    
+                    <div class="space-y-3">
+                        <!-- TELÉFONO -->
+                        <a class="contact-card flex items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md" 
+                           href="tel:+573124167936">
+                            <div class="flex size-10 items-center justify-center rounded-full bg-[var(--background-secondary)] text-[var(--primary-color)]">
+                                <span class="material-symbols-outlined">call</span>
+                            </div>
+                            <!-- NÚMERO ACTUALIZADO -->
+                            <span class="font-medium text-[var(--text-primary)]">+57 312 416 7936</span>
+                        </a>
+                        
+                        <!-- EMAIL -->
+                        <a class="contact-card flex items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md" 
+                           href="mailto:fotocastroc@outlook.com">
+                            <div class="flex size-10 items-center justify-center rounded-full bg-[var(--background-secondary)] text-[var(--primary-color)]">
+                                <span class="material-symbols-outlined">mail</span>
+                            </div>
+                            <!-- EMAIL ACTUALIZADO -->
+                            <span class="font-medium text-[var(--text-primary)]">fotocastroc@outlook.com</span>
+                        </a>
+                        
+                        <!-- WHATSAPP -->
+                        <a class="contact-card flex items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md" 
+                           href="https://wa.me/573124167936?text=¡Hola%20Foto%20Castro!%20📸%20Me%20gustaría%20conocer%20más%20sobre%20sus%20servicios%20de%20fotografía.%20Me%20interesa%20obtener%20información%20sobre%20paquetes,%20precios%20y%20disponibilidad.%20¡Espero%20su%20respuesta!%20✨">
+                            <div class="flex size-10 items-center justify-center rounded-full bg-green-500 text-white">
+                                <span class="material-symbols-outlined">chat</span>
+                            </div>
+                            <span class="font-medium text-[var(--text-primary)]">WhatsApp</span>
+                        </a>
+                        
+                        <!-- UBICACIÓN -->
+                        <a class="contact-card flex items-center gap-4 rounded-xl p-4 transition-shadow hover:shadow-md" 
+                           href="https://maps.google.com/?q=Foto+Castro+Calle+2+%23+1+-+63+Cáqueza+Cundinamarca" 
+                           target="_blank">
+                            <div class="flex size-10 items-center justify-center rounded-full bg-[var(--background-secondary)] text-[var(--primary-color)]">
+                                <span class="material-symbols-outlined">location_on</span>
+                            </div>
+                            <div>
+                                <!-- DIRECCIÓN COMPLETA -->
+                                <span class="font-medium text-[var(--text-primary)] block">Calle 2 # 1 - 63</span>
+                                <span class="text-sm text-[var(--text-secondary)]">Cáqueza, Cundinamarca</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- REDES SOCIALES -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-[var(--text-primary)]">Síguenos en redes</h2>
+                    
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <!-- INSTAGRAM -->
+                        <a class="social-card flex flex-col items-center gap-2 rounded-xl bg-[var(--background-primary)] p-4 transition-shadow hover:shadow-md border border-[var(--border-color)]" 
+                           href="https://instagram.com/fotocastrocaqueza" target="_blank">
+                            <div class="social-icon flex size-12 items-center justify-center rounded-full">
+                                <span class="material-symbols-outlined text-pink-500 text-2xl">photo_camera</span>
+                            </div>
+                            <span class="text-sm font-medium text-[var(--text-secondary)]">Instagram</span>
+                        </a>
+                        
+                        <!-- FACEBOOK -->
+                        <a class="social-card flex flex-col items-center gap-2 rounded-xl bg-[var(--background-primary)] p-4 transition-shadow hover:shadow-md border border-[var(--border-color)]" 
+                           href="https://www.facebook.com/FotoCastro" target="_blank">
+                            <div class="social-icon flex size-12 items-center justify-center rounded-full">
+                                <span class="material-symbols-outlined text-blue-600 text-2xl">thumb_up</span>
+                            </div>
+                            <span class="text-sm font-medium text-[var(--text-secondary)]">Facebook</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- HORARIOS DE ATENCIÓN -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-[var(--text-primary)]">Horarios de atención</h2>
+                    
+                    <div class="contact-card rounded-xl p-4 space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-[var(--text-secondary)]">Lunes - Sábado:</span>
+                            <span class="font-medium text-[var(--text-primary)]">7:30 AM - 9:00 PM</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-[var(--text-secondary)]">Domingo:</span>
+                            <span class="font-medium text-[var(--text-primary)]">9:00 AM - 1:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- NAVEGACIÓN INFERIOR -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                
+                <!-- ICONO DE INICIO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <p class="text-xs font-medium">Inicio</p>
+                </a>
+                
+                <!-- ICONO DE SERVICIOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="categorias.html">
+                    <span class="material-symbols-outlined">photo_library</span>
+                    <p class="text-xs font-medium">Servicios</p>
+                </a>
+                
+                <!-- ICONO DE TRABAJOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="verificar-trabajo.html">
+                    <span class="material-symbols-outlined">work</span>
+                    <p class="text-xs font-medium">Trabajos</p>
+                </a>
+                
+                <!-- ICONO DE CONTACTO (activo - color rojo) -->
+                <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+                    <span class="material-symbols-outlined filled">mail</span>
+                    <p class="text-xs font-bold">Contacto</p>
+                </a>
+                
+                <!-- ICONO DE CONÓCENOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="acerca-de.html">
+                    <span class="material-symbols-outlined">info</span>
+                    <span class="text-xs font-medium">Conócenos</span>
+                </a>
+                
+            </nav>
+        </footer>
+    </div>
+    
+    <!-- JavaScript personalizado para la página de contacto -->
+    <script src="../js/main.js"></script>
+    <script>
+        /* ============================================
+           JAVASCRIPT ESPECÍFICO PARA PÁGINA DE CONTACTO
+           ============================================ */
+        
+        // Función para regresar a la página anterior
+        function goBack() {
+            window.history.back();
+        }
+        
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página de Contacto cargada - Solo información de contacto');
+        });
+        
+        /* ============================================
+           INFORMACIÓN DE CONTACTO
+           ============================================ */
+        
+        // Contacto directo por WhatsApp con mensaje personalizado
+        function contactoWhatsApp() {
+            const mensaje = "¡Hola Foto Castro! 📸 Me gustaría conocer más sobre sus servicios de fotografía profesional. ¿Podrían brindarme información sobre paquetes, precios y disponibilidad? ¡Espero su respuesta! ✨";
+            const whatsappUrl = `https://wa.me/573124167936?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

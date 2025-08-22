@@ -1,0 +1,238 @@
+/* ============================================
+   VARIABLES DE COLOR Y TEMA
+   ============================================ */
+
+/* Definición de colores principales */
+:root {
+  /* Color primario del estudio (rojo) - puedes cambiarlo aquí */
+  --primary-color: #ea2a33;
+  
+  /* Colores para elementos de perfil activos */
+  --profile-text: #ffffff;
+  --profile-bg: #ea2a33;
+  
+  /* Colores para tema claro */
+  --text-primary-light: #111827;
+  --text-secondary-light: #6B7280;
+  --background-primary-light: #FFFFFF;
+  --background-secondary-light: #F3F4F6;
+  --accent-color-light: #F9FAFB;
+  --border-color-light: #E5E7EB;
+  
+  /* Colores para tema oscuro */
+  --text-primary-dark: #FFFFFF;
+  --text-secondary-dark: #9CA3AF;
+  --background-primary-dark: #111827;
+  --background-secondary-dark: #1F2937;
+  --accent-color-dark: #374151;
+  --border-color-dark: #374151;
+}
+
+/* ============================================
+   APLICACIÓN AUTOMÁTICA DE TEMA SEGÚN PREFERENCIA DEL USUARIO
+   ============================================ */
+
+/* Tema claro (por defecto) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-primary: var(--text-primary-light);
+    --text-secondary: var(--text-secondary-light);
+    --background-primary: var(--background-primary-light);
+    --background-secondary: var(--background-secondary-light);
+    --accent-color: var(--accent-color-light);
+    --border-color: var(--border-color-light);
+  }
+}
+
+/* Tema oscuro (se activa automáticamente si el usuario tiene tema oscuro) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --background-primary: var(--background-primary-dark);
+    --background-secondary: var(--background-secondary-dark);
+    --accent-color: var(--accent-color-dark);
+    --border-color: var(--border-color-dark);
+  }
+}
+
+/* ============================================
+   ESTILOS GENERALES
+   ============================================ */
+
+/* Altura mínima para el body - asegura que la página ocupe toda la pantalla */
+body {
+  min-height: max(884px, 100dvh);
+}
+
+/* ============================================
+   ESTILOS PERSONALIZADOS PARA ELEMENTOS ESPECÍFICOS
+   ============================================ */
+
+/* Efectos de hover para los enlaces del menú */
+nav a:hover {
+  transition: background-color 0.2s ease;
+}
+
+/* Efectos de animación para las tarjetas de servicios */
+.service-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación para el menú hamburguesa */
+#menu {
+  transition: all 0.3s ease;
+}
+
+/* Estilos para iconos activos en la navegación inferior */
+.nav-active {
+  color: var(--primary-color) !important;
+}
+
+/* ============================================
+   ESTILOS PARA FOOTER FIJO
+   ============================================ */
+
+/* Footer siempre fijo en la parte inferior */
+footer {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+  background-color: var(--background-primary) !important;
+  border-top: 1px solid var(--border-color) !important;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Asegurar que el contenido principal tenga espacio para el footer */
+main {
+  padding-bottom: 80px !important; /* Espacio para el footer */
+}
+
+/* ============================================
+   ESTILOS RESPONSIVOS
+   ============================================ */
+
+/* Para pantallas más grandes (tablets y escritorio) */
+@media (min-width: 768px) {
+  /* Ajustes para el grid de servicios en pantallas más grandes */
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  /* En desktop, mantener el footer fijo también */
+  footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+  }
+  
+  /* Ajustar el padding del main para desktop */
+  main {
+    padding-bottom: 90px !important;
+  }
+  
+  /* Mostrar menú de navegación normal en lugar del hamburguesa */
+  #menu {
+    display: flex !important;
+    position: static;
+    background: transparent;
+    box-shadow: none;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+  
+  #menu ul {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #menu li {
+    margin: 0;
+  }
+  
+  #menu a {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  #menu a:hover {
+    background-color: var(--background-secondary);
+  }
+  
+  #menu-button {
+    display: none;
+  }
+}
+
+/* ============================================
+   UTILIDADES Y CLASES AUXILIARES
+   ============================================ */
+
+/* Clase para ocultar elementos */
+.hidden {
+  display: none !important;
+}
+
+/* Clase para elementos que solo se muestran en móvil */
+.mobile-only {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+/* Clase para elementos que solo se muestran en desktop */
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+/* Animación de aparición para elementos */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aplicar animación a las tarjetas de servicios */
+.service-card {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Retraso escalonado para las animaciones */
+.service-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3) { animation-delay: 0.3s; }
+.service-card:nth-child(4) { animation-delay: 0.4s; }

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado - usando ruta relativa desde pages/ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Estado del Trabajo</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    
+    <!-- Estilos específicos para esta página -->
+    <style>
+        /* ============================================
+           ESTILOS ESPECÍFICOS PARA ESTADO DEL TRABAJO
+           ============================================ */
+        
+        /* Variables de color adicionales para esta página */
+        :root {
+            --input-border-light: #d1d5db;
+            --input-border-dark: #4b5563;
+            --card-shadow-light: rgba(0, 0, 0, 0.1);
+            --card-shadow-dark: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Aplicar variables de sombra según el tema */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --card-shadow: var(--card-shadow-light);
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --card-shadow: var(--card-shadow-dark);
+            }
+        }
+        
+        /* Estilos para el botón principal */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px var(--card-shadow);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-color);
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* Estilos para el campo de entrada */
+        .input-field {
+            width: 100%;
+            height: 3.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 2px solid var(--border-color);
+            background-color: var(--background-secondary);
+            color: var(--text-primary) !important;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 0.7;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(234, 42, 51, 0.1);
+            background-color: var(--background-primary);
+        }
+        
+        /* Animación para el icono de carga */
+        .loading-icon {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Estilos para los estados del trabajo */
+        .status-card {
+            background: var(--background-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .status-success {
+            border-left-color: #10b981;
+        }
+        
+        .status-progress {
+            border-left-color: #f59e0b;
+        }
+        
+        .status-pending {
+            border-left-color: #6b7280;
+        }
+
+        /* Colores de fondo para estados - adaptables al tema */
+        @media (prefers-color-scheme: light) {
+            .status-success {
+                background-color: rgba(16, 185, 129, 0.1);
+            }
+            
+            .status-progress {
+                background-color: rgba(245, 158, 11, 0.1);
+            }
+            
+            .status-pending {
+                background-color: rgba(107, 114, 128, 0.1);
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .status-success {
+                background-color: rgba(16, 185, 129, 0.15);
+            }
+            
+            .status-progress {
+                background-color: rgba(245, 158, 11, 0.15);
+            }
+            
+            .status-pending {
+                background-color: rgba(107, 114, 128, 0.15);
+            }
+        }
+
+        /* Mejorar contraste del texto en status cards */
+        .status-card .text-contrast {
+            color: var(--text-primary) !important;
+        }
+
+        .status-card .text-contrast-secondary {
+            color: var(--text-secondary) !important;
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--background-primary)] antialiased" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex flex-col justify-between min-h-screen">
+        
+        <!-- HEADER - Barra superior con botón de regreso y título -->
+        <header class="bg-[var(--background-primary)] shadow-sm sticky top-0 z-20">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- BOTÓN DE REGRESO - navega a la página anterior -->
+                    <button class="text-[var(--text-secondary)] hover:text-[var(--text-primary)]" onclick="goBack()">
+                        <span class="material-symbols-outlined text-3xl">arrow_back_ios_new</span>
+                    </button>
+                    
+                    <!-- TÍTULO DE LA PÁGINA -->
+                    <h1 class="text-xl font-bold text-[var(--text-primary)]">Estado del trabajo</h1>
+                    
+                    <!-- BOTÓN DE MENÚ HAMBURGUESA -->
+                    <button class="text-[var(--text-primary)]" id="menu-button">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- MENÚ DE NAVEGACIÓN DESPLEGABLE -->
+            <!-- Este menú se muestra/oculta al hacer clic en el botón hamburguesa -->
+            <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md z-30" id="menu">
+                <!-- Enlaces del menú - navegación funcional -->
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="../index.html">Inicio</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="categorias.html">Servicios</a>
+                <a class="block px-4 py-3 text-[var(--primary-color)] font-semibold" href="#">Trabajos</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="contacto.html">Contacto</a>
+                <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="acerca-de.html">Conócenos</a>
+            </nav>
+        </header>
+        
+        <!-- CONTENIDO PRINCIPAL - Formulario de consulta -->
+        <main class="flex-grow flex flex-col items-center justify-center p-4 text-center" style="padding-bottom: 80px !important;">
+            <div class="w-full max-w-md space-y-8">
+                
+                <!-- SECCIÓN DE TÍTULO Y DESCRIPCIÓN -->
+                <div class="space-y-2">
+                    <!-- Título principal (puedes cambiar este texto) -->
+                    <h2 class="text-2xl font-bold text-[var(--text-primary)]">Consulta el estado de tu sesión</h2>
+                    <!-- Descripción explicativa (puedes cambiar este texto) -->
+                    <p class="text-[var(--text-secondary)]">Ingresa la palabra clave que te proporcionamos para ver el progreso de tu trabajo.</p>
+                </div>
+                
+                <!-- FORMULARIO DE CONSULTA -->
+                <div class="w-full px-4">
+                    <!-- Campo de entrada para la palabra clave -->
+                    <label class="sr-only" for="keyword">Palabra clave</label>
+                    <div class="relative">
+                        <!-- Icono de llave dentro del campo -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]">key</span>
+                        <!-- Campo de texto - aquí el cliente ingresa su palabra clave -->
+                        <input class="input-field pl-11" 
+                               id="keyword" 
+                               name="keyword" 
+                               placeholder="Ingresa la palabra clave" 
+                               type="text"
+                               autocomplete="off"
+                               onKeyPress="handleKeyPress(event)"/>
+                    </div>
+                    
+                    <!-- Mensaje de error (oculto por defecto) -->
+                    <div id="error-message" class="hidden mt-2 text-sm text-red-500">
+                        <span class="material-symbols-outlined text-sm">error</span>
+                        <span class="ml-1">Palabra clave no encontrada. Verifica e intenta nuevamente.</span>
+                    </div>
+                    
+                    <!-- BOTÓN DE VERIFICACIÓN -->
+                    <button class="w-full btn-primary mt-4" id="verify-button" onclick="verifyWorkStatus()">
+                        <span id="button-text">Verificar estado</span>
+                        <span id="loading-spinner" class="hidden material-symbols-outlined loading-icon ml-2">refresh</span>
+                    </button>
+                </div>
+                
+                <!-- ÁREA DE RESULTADOS (se muestra después de la consulta) -->
+                <div id="results-area" class="hidden w-full">
+                    <!-- Aquí se mostrarán los resultados de la búsqueda -->
+                </div>
+            </div>
+        </main>
+        
+        <!-- FOOTER - Navegación inferior fija -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <!-- Navegación con iconos en la parte inferior -->
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                    
+                    <!-- ICONO DE INICIO -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                        <span class="material-symbols-outlined">home</span>
+                        <p class="text-xs font-medium">Inicio</p>
+                    </a>
+                    
+                    <!-- ICONO DE CATEGORÍAS -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="categorias.html">
+                        <span class="material-symbols-outlined">photo_library</span>
+                        <p class="text-xs font-medium">Categorías</p>
+                    </a>
+                    
+                    <!-- ICONO DE TRABAJOS (activo - color rojo) -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+                        <span class="material-symbols-outlined filled">work</span>
+                        <p class="text-xs font-bold">Trabajos</p>
+                    </a>
+                    
+                    <!-- ICONO DE CONTACTO -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="contacto.html">
+                        <span class="material-symbols-outlined">mail</span>
+                        <p class="text-xs font-medium">Contacto</p>
+                    </a>
+                    
+                    <!-- ICONO DE CONÓCENOS -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="acerca-de.html">
+                        <span class="material-symbols-outlined">info</span>
+                        <p class="text-xs font-medium">Conócenos</p>
+                    </a>
+                    
+                </nav>
+        </footer>
+    </div>
+    
+    <!-- JavaScript personalizado para verificación de trabajos -->
+    <script src="../js/main.js"></script>
+    <script>
+        /* ============================================
+           JAVASCRIPT ESPECÍFICO PARA ESTADO DEL TRABAJO
+           ============================================ */
+        
+        // ===================================================
+        // BASE DE DATOS DE TRABAJOS - AQUÍ AÑADES TUS CLIENTES
+        // ===================================================
+        // INSTRUCCIONES PARA AÑADIR NUEVOS TRABAJOS:
+        // 1. Cada trabajo necesita una PALABRA CLAVE única (ej: 'MARIA2024')
+        // 2. Esta palabra clave la das al cliente para consultar su trabajo
+        // 3. Puedes usar el formato: NOMBRE + AÑO + NÚMERO (ej: 'CARLOS2024001')
+        // 4. Estados disponibles: 'pendiente', 'en_proceso', 'completado'
+        
+        // Base de datos de trabajos - ahora se carga dinámicamente
+        let trabajosDatabase = {
+            // Datos de ejemplo - se reemplazarán por datos reales
+            'DEMO2024': {
+                cliente: 'Cliente de Demostración',
+                fecha: '1 de enero, 2024',
+                estado: 'completado',
+                entrega_estimada: 'Entregado',
+                observaciones: 'Este es un trabajo de demostración.'
+            }
+        };
+        
+        // Cargar trabajos desde localStorage al inicializar
+        function cargarTrabajosActualizados() {
+            const STORAGE_KEY = 'fotocastro_trabajos_shared';
+            
+            // Intentar cargar desde la clave compartida primero
+            let trabajosGuardadosStr = localStorage.getItem(STORAGE_KEY);
+            
+            // Si no existe, cargar desde la clave antigua
+            if (!trabajosGuardadosStr) {
+                trabajosGuardadosStr = localStorage.getItem('fotocastro_trabajos');
+            }
+            
+            if (trabajosGuardadosStr) {
+                try {
+                    const trabajosArray = JSON.parse(trabajosGuardadosStr);
+                    
+                    // Convertir array a objeto para compatibilidad
+                    const nuevaDB = {};
+                    trabajosArray.forEach(trabajo => {
+                        nuevaDB[trabajo.palabraClave] = {
+                            cliente: trabajo.cliente,
+                            fecha: trabajo.fecha,
+                            estado: trabajo.estado,
+                            entrega_estimada: trabajo.entrega_estimada,
+                            observaciones: trabajo.observaciones || 'Sin observaciones adicionales.'
+                        };
+                    });
+                    
+                    // Reemplazar base de datos
+                    trabajosDatabase = nuevaDB;
+                    console.log('✅ Trabajos cargados automáticamente:', Object.keys(trabajosDatabase).length);
+                    
+                    // Mostrar indicador de actualización
+                    mostrarIndicadorActualizacion();
+                    
+                } catch (error) {
+                    console.error('Error cargando trabajos:', error);
+                }
+            }
+        }
+        
+        // Mostrar indicador de que los datos están actualizados
+        function mostrarIndicadorActualizacion() {
+            const totalTrabajos = Object.keys(trabajosDatabase).length;
+            
+            if (totalTrabajos > 1) { // Más que solo el demo
+                const indicator = document.createElement('div');
+                indicator.className = 'fixed top-4 right-4 bg-green-500 text-white px-3 py-2 rounded-lg shadow-lg z-50 text-sm';
+                indicator.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="material-symbols-outlined text-sm mr-1">sync</span>
+                        ${totalTrabajos - 1} trabajos sincronizados
+                    </div>
+                `;
+                
+                document.body.appendChild(indicator);
+                
+                // Remover después de 3 segundos
+                setTimeout(() => {
+                    indicator.remove();
+                }, 3000);
+            }
+        }
+        
+        // Escuchar cambios en localStorage
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'fotocastro_trabajos_shared' || e.key === 'fotocastro_trabajos') {
+                cargarTrabajosActualizados();
+            }
+        });
+        
+        // Escuchar eventos personalizados
+        window.addEventListener('trabajosActualizados', function(e) {
+            cargarTrabajosActualizados();
+        });
+        
+        // Cargar trabajos al inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarTrabajosActualizados();
+        });
+        
+        // Función para regresar a la página anterior
+        function goBack() {
+            // Puedes cambiar esta URL por la página que prefieras
+            window.history.back();
+        }
+        
+        // Función para manejar Enter en el campo de texto
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                verifyWorkStatus();
+            }
+        }
+        
+        // Función principal para verificar el estado del trabajo
+        function verifyWorkStatus() {
+            const keyword = document.getElementById('keyword').value.trim().toUpperCase();
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const errorMessage = document.getElementById('error-message');
+            const resultsArea = document.getElementById('results-area');
+            
+            // Validar que se haya ingresado una palabra clave
+            if (!keyword) {
+                showError('Por favor ingresa una palabra clave');
+                return;
+            }
+            
+            // Mostrar estado de carga
+            showLoading(true);
+            hideError();
+            
+            // Simular consulta a base de datos (en la realidad sería una API call)
+            setTimeout(() => {
+                // Buscar la palabra clave sin importar mayúsculas/minúsculas
+                let trabajo = null;
+                for (const [clave, datos] of Object.entries(trabajosDatabase)) {
+                    if (clave.toUpperCase() === keyword) {
+                        trabajo = datos;
+                        break;
+                    }
+                }
+                
+                if (trabajo) {
+                    // Trabajo encontrado - mostrar resultados
+                    showWorkStatus(trabajo);
+                    hideError();
+                } else {
+                    // Trabajo no encontrado - mostrar error
+                    showError('Palabra clave no encontrada. Verifica e intenta nuevamente.');
+                    hideResults();
+                }
+                
+                showLoading(false);
+            }, 1500); // Simular tiempo de consulta
+        }
+        
+        // Función para mostrar el estado de carga
+        function showLoading(isLoading) {
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const verifyButton = document.getElementById('verify-button');
+            
+            if (isLoading) {
+                buttonText.textContent = 'Consultando...';
+                loadingSpinner.classList.remove('hidden');
+                verifyButton.disabled = true;
+                verifyButton.style.opacity = '0.7';
+            } else {
+                buttonText.textContent = 'Verificar estado';
+                loadingSpinner.classList.add('hidden');
+                verifyButton.disabled = false;
+                verifyButton.style.opacity = '1';
+            }
+        }
+        
+        // Función para mostrar error
+        function showError(message) {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.querySelector('span:last-child').textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+        
+        // Función para ocultar error
+        function hideError() {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.classList.add('hidden');
+        }
+        
+        // Función para ocultar resultados
+        function hideResults() {
+            const resultsArea = document.getElementById('results-area');
+            const verifyButton = document.getElementById('verify-button');
+            
+            resultsArea.classList.add('hidden');
+            
+            // Resetear el margen del botón
+            verifyButton.style.marginTop = '1rem';
+        }
+        
+        // Función para mostrar el estado del trabajo
+        function showWorkStatus(trabajo) {
+            const resultsArea = document.getElementById('results-area');
+            const verifyButton = document.getElementById('verify-button');
+            
+            // Determinar clase de estado
+            let statusClass = 'status-pending';
+            let statusIcon = 'schedule';
+            let statusText = 'Pendiente';
+            
+            if (trabajo.estado === 'completado') {
+                statusClass = 'status-success';
+                statusIcon = 'check_circle';
+                statusText = 'Completado';
+            } else if (trabajo.estado === 'en_proceso') {
+                statusClass = 'status-progress';
+                statusIcon = 'autorenew';
+                statusText = 'En proceso';
+            }
+            
+            // Generar HTML del resultado
+            resultsArea.innerHTML = `
+                <div class="status-card ${statusClass}">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <span class="material-symbols-outlined text-2xl mr-2 text-contrast">${statusIcon}</span>
+                            <div>
+                                <h3 class="font-bold text-contrast">${trabajo.cliente}</h3>
+                                <p class="text-sm text-contrast-secondary">${trabajo.fecha}</p>
+                            </div>
+                        </div>
+                        <span class="text-sm font-semibold text-contrast">${statusText}</span>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <!-- Información adicional -->
+                        <div class="text-sm">
+                            <div class="mb-2">
+                                <span class="text-contrast-secondary">Entrega estimada:</span>
+                                <p class="font-semibold text-contrast">${trabajo.entrega_estimada}</p>
+                            </div>
+                            ${trabajo.observaciones && trabajo.observaciones !== 'Sin observaciones adicionales.' ? 
+                                `<div>
+                                    <span class="text-contrast-secondary">Observaciones:</span>
+                                    <p class="text-contrast italic">"${trabajo.observaciones}"</p>
+                                </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            resultsArea.classList.remove('hidden');
+            
+            // Agregar margen superior al botón para crear espacio visual
+            verifyButton.style.marginTop = '1.5rem';
+            
+            // Scroll suave hacia los resultados después de un pequeño delay
+            setTimeout(() => {
+                resultsArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+        
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página de Estado del Trabajo cargada');
+            
+            // Enfocar el campo de entrada
+            document.getElementById('keyword').focus();
+        });
+        
+        /* ============================================
+           FUNCIONES PARA PERSONALIZAR
+           ============================================ */
+        
+        // Para agregar nuevos trabajos a la base de datos, modifica el objeto 'trabajosDatabase'
+        // Para conectar con una API real, reemplaza la consulta simulada en verifyWorkStatus()
+        // Para cambiar los mensajes, modifica los textos en las funciones correspondientes
+    </script>
+</body>
+</html>

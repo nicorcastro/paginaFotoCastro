@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado - usando ruta relativa desde pages/ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Acerca de Nosotros</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    
+    <!-- Estilos específicos para la página Acerca de -->
+    <style>
+        /* ============================================
+           ESTILOS ESPECÍFICOS PARA PÁGINA ACERCA DE
+           ============================================ */
+        
+        /* Variables adicionales para esta página */
+        :root {
+            --profile-bg: rgba(234, 42, 51, 0.1);
+            --profile-text: var(--primary-color);
+            --ring-color: var(--background-primary);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Estilos para las tarjetas de contenido */
+        .content-card {
+            background: var(--background-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .content-card:hover {
+            box-shadow: var(--card-shadow);
+            transform: translateY(-2px);
+        }
+        
+        /* Estilos para las fotos del equipo */
+        .team-photo {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            border: 2px solid var(--background-primary);
+            transition: all 0.3s ease;
+            object-fit: cover;
+        }
+        
+        .team-photo:hover {
+            transform: scale(1.1);
+            border-color: var(--primary-color);
+        }
+        
+        /* Estilos para estadísticas */
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), #c0262d);
+            color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(234, 42, 51, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+        
+        /* Estilos para la línea de tiempo */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.375rem;
+            top: 1.25rem;
+            width: 2px;
+            height: calc(100% + 0.5rem);
+            background: var(--border-color);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        /* Animaciones */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-slide-in {
+            animation: slideInUp 0.6s ease forwards;
+        }
+        
+        /* Animación de carga para las imágenes */
+        .loading-placeholder {
+            background: linear-gradient(90deg, var(--background-secondary) 25%, var(--border-color) 50%, var(--background-secondary) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex size-full min-h-screen flex-col justify-between overflow-x-hidden">
+        
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="flex-grow">
+            
+            <!-- HEADER - Barra superior con botón de regreso y título -->
+            <header class="sticky top-0 z-20 bg-[var(--background-primary)] shadow-sm border-b border-[var(--border-color)]">
+                <div class="flex items-center justify-between p-4">
+                    <!-- BOTÓN DE REGRESO - navega a la página anterior -->
+                    <button class="text-[var(--text-primary)]" onclick="goBack()">
+                        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                    </button>
+                    
+                    <!-- TÍTULO DE LA PÁGINA -->
+                    <h1 class="text-xl font-bold text-[var(--text-primary)] absolute left-1/2 -translate-x-1/2">Acerca de Nosotros</h1>
+                    
+                    <!-- BOTÓN DE MENÚ HAMBURGUESA -->
+                    <button class="text-[var(--text-primary)]" id="menu-button">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+                
+                <!-- MENÚ DE NAVEGACIÓN DESPLEGABLE -->
+                <!-- Este menú se muestra/oculta al hacer clic en el botón hamburguesa -->
+                <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md z-30" id="menu">
+                    <!-- Enlaces del menú - navegación funcional -->
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="../index.html">Inicio</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="categorias.html">Servicios</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="verificar-trabajo.html">Trabajos</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="contacto.html">Contacto</a>
+                    <a class="block px-4 py-3 text-[var(--primary-color)] font-semibold" href="#">Conócenos</a>
+                </nav>
+            </header>
+            
+            <!-- CONTENIDO DE LA PÁGINA -->
+            <main class="px-6 py-8" style="padding-bottom: 80px !important;">
+                
+                <!-- ESTADÍSTICAS PRINCIPALES -->
+                <section class="mb-10">
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <!-- ESTADÍSTICA 1: AÑOS DE EXPERIENCIA -->
+                        <div class="stat-card">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Años de Experiencia</div>
+                        </div>
+                        
+                        <!-- ESTADÍSTICA 2: EVENTOS CAPTURADOS -->
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Eventos Capturados</div>
+                        </div>
+                        
+                        <!-- ESTADÍSTICA 3: CLIENTES SATISFECHOS -->
+                        <div class="stat-card">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">Clientes Felices</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- NUESTRA HISTORIA -->
+                <section class="content-card mb-10 animate-slide-in">
+                    <div class="flex items-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--primary-color)] text-2xl mr-3">auto_stories</span>
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)]">Nuestra Historia</h2>
+                    </div>
+                    <p class="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+                        Foto Castro nació en 2014 con una visión clara: capturar los momentos más importantes de la vida con un enfoque artístico y profesional. Comenzamos como un pequeño estudio familiar en Cáqueza, Cundinamarca, y hemos crecido hasta convertirnos en uno de los estudios de fotografía más reconocidos de la región.
+                    </p>
+                    <p class="text-base text-[var(--text-secondary)] leading-relaxed">
+                        Nuestra pasión por la fotografía nos impulsa a superar los límites creativos y a innovar constantemente. Cada proyecto es una nueva oportunidad para crear imágenes que perduren en el tiempo y toquen el corazón de nuestros clientes.
+                    </p>
+                </section>
+                
+                <!-- NUESTRA FILOSOFÍA -->
+                <section class="content-card mb-10 animate-slide-in">
+                    <div class="flex items-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--primary-color)] text-2xl mr-3">psychology</span>
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)]">Nuestra Filosofía</h2>
+                    </div>
+                    <p class="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+                        Creemos que cada imagen cuenta una historia única e irrepetible. No solo capturamos momentos, creamos recuerdos que trascienden el tiempo. Nuestro enfoque va más allá de la técnica fotográfica; buscamos conectar emocionalmente con cada momento.
+                    </p>
+                    
+                    <!-- VALORES PRINCIPALES -->
+                    <div class="grid grid-cols-1 gap-3 mt-6">
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] mr-3">favorite</span>
+                            <div>
+                                <h3 class="font-semibold text-[var(--text-primary)]">Pasión</h3>
+                                <p class="text-sm text-[var(--text-secondary)]">Cada foto refleja nuestro amor por el arte</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] mr-3">precision_manufacturing</span>
+                            <div>
+                                <h3 class="font-semibold text-[var(--text-primary)]">Profesionalismo</h3>
+                                <p class="text-sm text-[var(--text-secondary)]">Calidad técnica y servicio excepcional</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] mr-3">lightbulb</span>
+                            <div>
+                                <h3 class="font-semibold text-[var(--text-primary)]">Creatividad</h3>
+                                <p class="text-sm text-[var(--text-secondary)]">Innovamos en cada sesión fotográfica</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- NUESTRO EQUIPO -->
+                <section class="content-card mb-10 animate-slide-in">
+                    <div class="flex items-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--primary-color)] text-2xl mr-3">groups</span>
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)]">Nuestro Equipo</h2>
+                    </div>
+                    
+                    <!-- FOTOS DEL EQUIPO -->
+                    <div class="flex -space-x-4 mb-6">
+                        <img alt="Carlos Castro - Fotógrafo Principal" 
+                             class="team-photo loading-placeholder" 
+                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0ib3BhY2l0eTogMC41OyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTIgMkM2LjQ3NzE1IDIgMiA2LjQ3NzE1IDIgMTJDMiAxNy41MjI4IDYuNDc3MTUgMjIgMTIgMjJDMTcuNTIyOCAyMiAyMiAxNy41MjI4IDIyIDEyQzIyIDYuNDc3MTUgMTcuNTIyOCAyIDEyIDJaTTEyIDZDMTMuNjU2OSA2IDE1IDcuMzQzMTUgMTUgOUMxNSAxMC42NTY5IDEzLjY1NjkgMTIgMTIgMTJDMTAuMzQzMSAxMiA5IDEwLjY1NjkgOSA5QzkgNy4zNDMxNSAxMC4zNDMxIDYgMTIgNlpNMTIgMjBDOS4zNDc4NCAyMCA3LjAyNTUxIDE4LjUxMjIgNS43NzY4NSAxNi4zNzY4QzYuNzQ1NjYgMTQuNzkxIDguODAyOTMgMTMuNSAxMS4yNSAxMy41SDEyLjc1QzE1LjE5NzEgMTMuNSAxNy4yNTQzIDE0Ljc5MSAxOC4yMjMxIDE2LjM3NjhDMTYuOTc0NSAxOC41MTIyIDE0LjY1MjIgMjAgMTIgMjBaIiBmaWxsPSIjOURBNEFFIi8+Cjwvc3ZnPgo8L3N2Zz4K'"/>
+                        
+                        <img alt="María González - Fotógrafa de Bodas" 
+                             class="team-photo loading-placeholder" 
+                             src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0ib3BhY2l0eTogMC41OyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTIgMkM2LjQ3NzE1IDIgMiA2LjQ3NzE1IDIgMTJDMiAxNy41MjI4IDYuNDc3MTUgMjIgMTIgMjJDMTcuNTIyOCAyMiAyMiAxNy41MjI4IDIyIDEyQzIyIDYuNDc3MTUgMTcuNTIyOCAyIDEyIDJaTTEyIDZDMTMuNjU2OSA2IDE1IDcuMzQzMTUgMTUgOUMxNSAxMC42NTY5IDEzLjY1NjkgMTIgMTIgMTJDMTAuMzQzMSAxMiA5IDEwLjY1NjkgOSA5QzkgNy4zNDMxNSAxMC4zNDMxIDYgMTIgNlpNMTIgMjBDOS4zNDc4NCAyMCA3LjAyNTUxIDE4LjUxMjIgNS43NzY4NSAxNi4zNzY4QzYuNzQ1NjYgMTQuNzkxIDguODAyOTMgMTMuNSAxMS4yNSAxMy41SDEyLjc1QzE1LjE5NzEgMTMuNSAxNy4yNTQzIDE0Ljc5MSAxOC4yMjMxIDE2LjM3NjhDMTYuOTc0NSAxOC41MTIyIDE0LjY1MjIgMjAgMTIgMjBaIiBmaWxsPSIjOURBNEFFIi8+Cjwvc3ZnPgo8L3N2Zz4K'"/>
+                        
+                        <img alt="Andrés Rodríguez - Editor y Retocador" 
+                             class="team-photo loading-placeholder" 
+                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0ib3BhY2l0eTogMC41OyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTIgMkM2LjQ3NzE1IDIgMiA2LjQ3NzE1IDIgMTJDMiAxNy41MjI4IDYuNDc3MTUgMjIgMTIgMjJDMTcuNTIyOCAyMiAyMiAxNy41MjI4IDIyIDEyQzIyIDYuNDc3MTUgMTcuNTIyOCAyIDEyIDJaTTEyIDZDMTMuNjU2OSA2IDE1IDcuMzQzMTUgMTUgOUMxNSAxMC42NTY5IDEzLjY1NjkgMTIgMTIgMTJDMTAuMzQzMSAxMiA5IDEwLjY1NjkgOSA5QzkgNy4zNDMxNSAxMC4zNDMxIDYgMTIgNlpNMTIgMjBDOS4zNDc4NCAyMCA3LjAyNTUxIDE4LjUxMjIgNS43NzY4NSAxNi4zNzY4QzYuNzQ1NjYgMTQuNzkxIDguODAyOTMgMTMuNSAxMS4yNSAxMy41SDEyLjc1QzE1LjE5NzEgMTMuNSAxNy4yNTQzIDE0Ljc5MSAxOC4yMjMxIDE2LjM3NjhDMTYuOTc0NSAxOC41MTIyIDE0LjY1MjIgMjAgMTIgMjBaIiBmaWxsPSIjOURBNEFFIi8+Cjwvc3ZnPgo8L3N2Zz4K'"/>
+                        
+                        <div class="team-photo bg-[var(--background-secondary)] flex items-center justify-center">
+                            <span class="text-[var(--text-secondary)] text-sm font-bold">+2</span>
+                        </div>
+                    </div>
+                    
+                    <p class="text-base text-[var(--text-secondary)] leading-relaxed mb-4">
+                        Contamos con un equipo de fotógrafos talentosos y experimentados, cada uno especializado en diferentes áreas. Carlos Castro, nuestro fundador, lidera el equipo con más de 10 años de experiencia en fotografía de eventos.
+                    </p>
+                    
+                    <!-- ESPECIALIDADES DEL EQUIPO -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="text-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] text-xl">camera_alt</span>
+                            <h4 class="text-sm font-semibold text-[var(--text-primary)] mt-1">Bodas</h4>
+                        </div>
+                        <div class="text-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] text-xl">celebration</span>
+                            <h4 class="text-sm font-semibold text-[var(--text-primary)] mt-1">15 Años</h4>
+                        </div>
+                        <div class="text-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] text-xl">school</span>
+                            <h4 class="text-sm font-semibold text-[var(--text-primary)] mt-1">Graduaciones</h4>
+                        </div>
+                        <div class="text-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-[var(--primary-color)] text-xl">business_center</span>
+                            <h4 class="text-sm font-semibold text-[var(--text-primary)] mt-1">Corporativo</h4>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- LÍNEA DE TIEMPO -->
+                <section class="content-card mb-10 animate-slide-in">
+                    <div class="flex items-center mb-6">
+                        <span class="material-symbols-outlined text-[var(--primary-color)] text-2xl mr-3">timeline</span>
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)]">Nuestro Recorrido</h2>
+                    </div>
+                    
+                    <div class="space-y-0">
+                        <div class="timeline-item">
+                            <h3 class="font-semibold text-[var(--text-primary)]">2014 - Los Comienzos</h3>
+                            <p class="text-sm text-[var(--text-secondary)]">Carlos Castro funda Foto Castro en un pequeño local de Cáqueza, Cundinamarca</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h3 class="font-semibold text-[var(--text-primary)]">2017 - Expansión del Equipo</h3>
+                            <p class="text-sm text-[var(--text-secondary)]">Se incorporan María y Andrés al equipo</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h3 class="font-semibold text-[var(--text-primary)]">2020 - Nuevas Instalaciones</h3>
+                            <p class="text-sm text-[var(--text-secondary)]">Apertura de nuestro estudio actual con tecnología de punta</p>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <h3 class="font-semibold text-[var(--text-primary)]">2024 - Reconocimiento Nacional</h3>
+                            <p class="text-sm text-[var(--text-secondary)]">Premio al Mejor Estudio de Fotografía de la región</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- CERTIFICACIONES Y PREMIOS -->
+                <section class="content-card mb-10 animate-slide-in">
+                    <div class="flex items-center mb-4">
+                        <span class="material-symbols-outlined text-[var(--primary-color)] text-2xl mr-3">emoji_events</span>
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)]">Reconocimientos</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-yellow-500 mr-3">star</span>
+                            <div>
+                                <h4 class="font-semibold text-[var(--text-primary)]">Mejor Estudio 2024</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Asociación de Fotógrafos Profesionales</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-blue-500 mr-3">verified</span>
+                            <div>
+                                <h4 class="font-semibold text-[var(--text-primary)]">Certificación Canon</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Especialistas en equipos profesionales</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-3 bg-[var(--background-secondary)] rounded-lg">
+                            <span class="material-symbols-outlined text-green-500 mr-3">thumb_up</span>
+                            <div>
+                                <h4 class="font-semibold text-[var(--text-primary)]">5 Estrellas en Google</h4>
+                                <p class="text-sm text-[var(--text-secondary)]">Más de 150 reseñas positivas</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </main>
+        </div>
+        
+        <!-- FOOTER - Navegación inferior fija -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <!-- Navegación con iconos en la parte inferior -->
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                
+                <!-- ICONO DE INICIO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                    <span class="material-symbols-outlined">home</span>
+                    <p class="text-xs font-medium">Inicio</p>
+                </a>
+                
+                <!-- ICONO DE SERVICIOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="categorias.html">
+                    <span class="material-symbols-outlined">photo_library</span>
+                    <p class="text-xs font-medium">Servicios</p>
+                </a>
+                
+                <!-- ICONO DE TRABAJOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="verificar-trabajo.html">
+                    <span class="material-symbols-outlined">work</span>
+                    <p class="text-xs font-medium">Trabajos</p>
+                </a>
+                
+                <!-- ICONO DE CONTACTO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="contacto.html">
+                    <span class="material-symbols-outlined">mail</span>
+                    <p class="text-xs font-medium">Contacto</p>
+                </a>
+                
+                <!-- ICONO DE CONÓCENOS (activo - color rojo) -->
+                <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+                    <span class="material-symbols-outlined filled">info</span>
+                    <p class="text-xs font-bold">Conócenos</p>
+                </a>
+                
+            </nav>
+        </footer>
+        </nav>
+    </div>
+    
+    <!-- JavaScript personalizado para la página acerca de -->
+    <script src="../js/main.js"></script>
+    <script>
+        /* ============================================
+           JAVASCRIPT ESPECÍFICO PARA PÁGINA ACERCA DE
+           ============================================ */
+        
+        // Función para regresar a la página anterior
+        function goBack() {
+            window.history.back();
+        }
+        
+        // Contador animado para las estadísticas
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/\D/g, ''));
+                const duration = 2000; // 2 segundos
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = counter.textContent.replace(/\d+/, target);
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = counter.textContent.replace(/\d+/, Math.floor(current));
+                    }
+                }, 16);
+            });
+        }
+        
+        // Función para animar elementos cuando entran en el viewport
+        function animateOnScroll() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-slide-in');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.content-card').forEach(card => {
+                observer.observe(card);
+            });
+        }
+        
+        // Función para manejar errores de carga de imágenes
+        function handleImageErrors() {
+            document.querySelectorAll('.team-photo').forEach(img => {
+                img.addEventListener('load', function() {
+                    this.classList.remove('loading-placeholder');
+                });
+                
+                img.addEventListener('error', function() {
+                    this.classList.remove('loading-placeholder');
+                    // La imagen ya tiene un onerror inline que maneja el fallback
+                });
+            });
+        }
+        
+        // Función para alternar entre temas claro y oscuro (para futuras implementaciones)
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Inicialización al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página Acerca de cargada');
+            
+            // Inicializar animaciones
+            setTimeout(animateCounters, 500); // Retraso para que se vea el efecto
+            animateOnScroll();
+            handleImageErrors();
+            
+            // Cargar tema guardado
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+        });
+        
+        /* ============================================
+           FUNCIONES PARA PERSONALIZAR
+           ============================================ */
+        
+        // Para cambiar las estadísticas:
+        // 1. Modifica los números en las tarjetas .stat-card
+        // 2. Actualiza los textos descriptivos
+        
+        // Para cambiar la información del equipo:
+        // 1. Reemplaza las URLs de las imágenes en los elementos .team-photo
+        // 2. Actualiza los textos alt con los nombres reales
+        // 3. Modifica las especialidades en la sección de equipos
+        
+        // Para personalizar la línea de tiempo:
+        // 1. Edita los años y eventos en la sección .timeline-item
+        // 2. Agrega o quita elementos según tu historia real
+        
+        // Para cambiar los reconocimientos:
+        // 1. Actualiza las certificaciones y premios reales
+        // 2. Modifica los iconos según el tipo de reconocimiento
+    </script>
+</body>
+</html>

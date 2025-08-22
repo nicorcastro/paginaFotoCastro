@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Página de Inicio</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex size-full min-h-screen flex-col justify-between group/design-root overflow-x-hidden">
+        
+        <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+        <div class="flex-grow">
+            
+            <!-- HEADER - Barra superior con logo y menú hamburguesa -->
+            <header class="sticky top-0 z-20 bg-[var(--background-primary)]">
+                <!-- Contenedor del header con logo y botón de menú -->
+                <div class="flex items-center justify-between p-4">
+                    <!-- LOGO Y NOMBRE DEL ESTUDIO -->
+                    <div class="flex items-center gap-2">
+                        <!-- Icono de cámara (puedes cambiar este icono) -->
+                        <span class="material-symbols-outlined text-3xl text-[var(--primary-color)]">photo_camera</span>
+                        <!-- Nombre del estudio (puedes modificar este texto) -->
+                        <h1 class="text-xl font-bold text-[var(--text-primary)]">Foto Castro</h1>
+                    </div>
+                    
+                    <!-- BOTÓN DE MENÚ HAMBURGUESA -->
+                    <button class="text-[var(--text-primary)]" id="menu-button">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+                
+                <!-- MENÚ DE NAVEGACIÓN DESPLEGABLE -->
+                <!-- Este menú se muestra/oculta al hacer clic en el botón hamburguesa -->
+                <nav class="hidden absolute top-full left-0 w-full bg-[var(--background-primary)] shadow-md" id="menu">
+                    <!-- Enlaces del menú - navegación funcional -->
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="pages/categorias.html">Servicios</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="pages/contacto.html">Contacto</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="pages/verificar-trabajo.html">Verificar Trabajo</a>
+                    <a class="block px-4 py-3 text-[var(--text-primary)] hover:bg-[var(--background-secondary)]" href="pages/acerca-de.html">Acerca de Nosotros</a>
+                    <!-- Enlace de administración (solo para el propietario) -->
+                    <a class="block px-4 py-3 text-[var(--primary-color)] font-semibold hover:bg-[var(--background-secondary)]" href="admin/admin-auto.html">⚙️ Panel Admin</a>
+                </nav>
+            </header>
+            
+            <!-- CONTENIDO PRINCIPAL DE LA PÁGINA -->
+            <main class="p-4" style="padding-bottom: 80px !important;">
+                
+                <!-- SECCIÓN HERO - Presentación principal del estudio -->
+                <div class="flex flex-col items-center justify-center mb-8">
+                    <!-- Icono grande de cámara -->
+                    <span class="material-symbols-outlined text-8xl text-[var(--primary-color)]">photo_camera</span>
+                    <!-- Título principal (puedes modificar este texto) -->
+                    <h2 class="text-3xl font-bold text-[var(--text-primary)] mt-2">Foto Castro</h2>
+                    <!-- Subtítulo descriptivo (puedes modificar este texto) -->
+                    <p class="text-base text-[var(--text-secondary)]">Capturando tus mejores momentos</p>
+                </div>
+                
+                <!-- SECCIÓN DE SERVICIOS -->
+                <!-- Encabezado de la sección de servicios -->
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-[var(--text-primary)]">Nuestros Servicios</h2>
+                    <!-- Enlace para ver todos los servicios -->
+                    <a class="text-sm font-semibold text-[var(--primary-color)]" href="pages/categorias.html">Ver todo</a>
+                </div>
+                
+                <!-- GRID DE SERVICIOS - Cuadrícula de 2 columnas con rotación automática -->
+                <div class="grid grid-cols-2 gap-4" id="servicios-grid">
+                    <!-- Los servicios se cargarán dinámicamente aquí -->
+                </div>
+            </main>
+        </div>
+        
+        <!-- FOOTER - Navegación inferior fija -->
+        <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+            <!-- Navegación con iconos en la parte inferior -->
+            <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                
+                <!-- ICONO DE INICIO (activo - color rojo) -->
+                <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="#">
+                    <span class="material-symbols-outlined filled">home</span>
+                    <p class="text-xs font-bold">Inicio</p>
+                </a>
+                
+                <!-- ICONO DE CATEGORÍAS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="pages/categorias.html">
+                    <span class="material-symbols-outlined">photo_library</span>
+                    <p class="text-xs font-medium">Categorías</p>
+                </a>
+                
+                <!-- ICONO DE TRABAJOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="pages/verificar-trabajo.html">
+                    <span class="material-symbols-outlined">work</span>
+                    <p class="text-xs font-medium">Trabajos</p>
+                </a>
+                
+                <!-- ICONO DE CONTACTO -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="pages/contacto.html">
+                    <span class="material-symbols-outlined">mail</span>
+                    <p class="text-xs font-medium">Contacto</p>
+                </a>
+                
+                <!-- ICONO DE CONÓCENOS -->
+                <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="pages/acerca-de.html">
+                    <span class="material-symbols-outlined">info</span>
+                    <p class="text-xs font-medium">Conócenos</p>
+                </a>
+                
+            </nav>
+        </footer>
+    </div>
+    
+    <!-- JavaScript personalizado -->
+    <script src="js/main.js"></script>
+    
+    <!-- JavaScript para rotación de servicios -->
+    <script>
+        // Array con todos los servicios disponibles
+        const todosLosServicios = [
+            {
+                nombre: "Matrimonios",
+                enlace: "pages/galeria-matrimonios.html",
+                imagen: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "15 Años",
+                enlace: "pages/galeria-15-anos.html",
+                imagen: "https://images.unsplash.com/photo-1594998893017-36147743a059?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "New Born",
+                enlace: "pages/galeria-newborn.html",
+                imagen: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "Pre-mamá",
+                enlace: "pages/galeria-premama.html",
+                imagen: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "Bebés",
+                enlace: "pages/galeria-bebes.html",
+                imagen: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "Eventos Religiosos",
+                enlace: "pages/galeria-eventos-religiosos.html",
+                imagen: "https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "Eventos",
+                enlace: "pages/galeria-eventos.html",
+                imagen: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            },
+            {
+                nombre: "Foto Estudio",
+                enlace: "pages/galeria-foto-estudio.html",
+                imagen: "https://images.unsplash.com/photo-1554048612-b6ebae92c0cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+            }
+        ];
+
+        let indiceActual = 0;
+
+        function crearElementoServicio(servicio) {
+            return `
+                <a class="group" href="${servicio.enlace}">
+                    <div class="overflow-hidden rounded-lg">
+                        <div class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-lg transition-transform duration-300 group-hover:scale-105" 
+                             style='background-image: url("${servicio.imagen}");'>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-primary)] text-base font-semibold mt-2">${servicio.nombre}</p>
+                </a>
+            `;
+        }
+
+        function mostrarServicios() {
+            const grid = document.getElementById('servicios-grid');
+            let serviciosAMostrar = [];
+            
+            // Seleccionar 4 servicios consecutivos, rotando si es necesario
+            for (let i = 0; i < 4; i++) {
+                const indice = (indiceActual + i) % todosLosServicios.length;
+                serviciosAMostrar.push(todosLosServicios[indice]);
+            }
+            
+            // Generar HTML para los servicios
+            const html = serviciosAMostrar.map(servicio => crearElementoServicio(servicio)).join('');
+            
+            // Aplicar con animación suave
+            grid.style.opacity = '0.7';
+            setTimeout(() => {
+                grid.innerHTML = html;
+                grid.style.opacity = '1';
+            }, 300);
+        }
+
+        function rotarServicios() {
+            indiceActual = (indiceActual + 1) % todosLosServicios.length;
+            mostrarServicios();
+        }
+
+        // Inicializar cuando cargue la página
+        document.addEventListener('DOMContentLoaded', function() {
+            mostrarServicios();
+            
+            // Rotar servicios cada 5 segundos
+            setInterval(rotarServicios, 5000);
+        });
+    </script>
+
+    <!-- Botón de WhatsApp flotante -->
+    <a href="https://wa.me/573124167936?text=Hola%20Foto%20Castro,%20me%20gustaría%20conocer%20más%20sobre%20sus%20servicios%20fotográficos" target="_blank" 
+       class="fixed bottom-20 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors z-50 flex items-center justify-center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.515z" fill="currentColor"/>
+        </svg>
+    </a>
+</body>
+</html>

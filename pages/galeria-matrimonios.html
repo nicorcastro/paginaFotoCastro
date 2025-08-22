@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Fuentes de Google - Plus Jakarta Sans para el texto principal -->
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    
+    <!-- Iconos de Material Symbols para elementos de interfaz -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    
+    <!-- Framework CSS Tailwind para estilos rápidos -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Archivo CSS personalizado - usando ruta relativa desde pages/ -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Título de la página (aparece en la pestaña del navegador) -->
+    <title>Foto Castro - Galería de Bodas</title>
+    
+    <!-- Favicon (icono de la pestaña) -->
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+</head>
+
+<body class="bg-[var(--background-primary)]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <!-- CONTENEDOR PRINCIPAL - Layout completo de la página -->
+    <div class="relative flex size-full min-h-screen flex-col">
+        
+        <!-- ÁREA DE CONTENIDO PRINCIPAL -->
+        <div class="flex-grow pb-24">
+            
+            <!-- HEADER - Barra superior con botón de regreso y título -->
+            <header class="bg-[var(--background-primary)] sticky top-0 z-10 flex items-center justify-between p-4 backdrop-blur-sm bg-opacity-80">
+                <!-- BOTÓN DE REGRESO - navega a la página de categorías -->
+                <button class="text-[var(--text-primary)] flex size-10 items-center justify-center rounded-full" onclick="goBackToCategories()">
+                    <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                </button>
+                
+                <!-- TÍTULO DE LA GALERÍA - Bodas (puedes cambiar este texto) -->
+                <h1 class="text-[var(--text-primary)] text-xl font-bold">Bodas</h1>
+                
+                <!-- ESPACIADOR - mantiene el título centrado -->
+                <div class="w-10"></div>
+            </header>
+            
+            <!-- CONTENIDO PRINCIPAL - Galería de fotos de bodas -->
+            <main class="p-4" style="padding-bottom: 80px !important;">
+                
+                <!-- GRID DE FOTOS - Grid responsive que se adapta al tamaño de pantalla -->
+                <!-- En móvil: 2 columnas, en tablet: 3 columnas, en desktop: 4 columnas -->
+                <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                    
+                    <!-- FOTO 1 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Ceremonia romántica" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGAx2HFuzQRPHqtnfeGrK5_rRpx4oha5KpNgWL5aoJOkiN_Q63ucZ-QrGyOEK3PXrDeUodXpmqv8a4HVT57SFRF2khmu2aJoa6FfSyPX_sRmvga02OBhxZabWMPNJop3MHJimqI_Kjtcxo4iGy0fSiaFUUsFE7npSb9sG_gu_7s85gz7HaKdvOZFX1q5LjX7ZZFT9TU8tTLt36Vn1P0LIy7x6D1rI7S_VD6bfTDnyupHxKJpsHsZbXF3RfHcb6oIbQjiFSxkhyaao"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- FOTO 2 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Momento íntimo de la pareja" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhcjMNrRuZ7BnT-XCuBpbO7nGyaVnWtG1WMm5NdXZAHWgoN-OMMwC-Dqs8MZtXpr-EWcnLkq3EX_qsb-VcS4TzkIkwelIV1G43IlYint3fM8tDq7UXDpB0Pi4n2q9hRNKu8U_djqkKAIwc8MhKFuDy2K8JFlywKmqOUR-bvcQ78w47t680DQhvc8177VP9aVCT64KOVWUB4qFYT5pIwkBJO3AhA_9wHhCwqFD1K8P8oNXHEOBC4-sYBtP1zZd2w1kkPEBpPD-kG5Q"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- FOTO 3 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Detalles del vestido" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM9KYg9Z3YBKEikwlUKxUXXgPr61knqpFLzT5y9S1TPS7iwPjszxydlB-bty_4S1sVfkmrbWVKvSY-f05IzC8AYju0Zq1JFFY7Wf2EpczmYERdD-iADmHdwXWxfajs9qUzbMyO5Aggu8q3BVf7FzU39oGGGLJH0c9jCjmDA6Ke2t8MqAFZ6LwZLxWnqu_nftrRk7tieUG3o8udpSjwlxeEVdEytdTCrpLvHD3xAm6o9JoSrI6qiZsCV0Y6GzXyX9i53Y_cMd7O5U0"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- FOTO 4 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Intercambio de anillos" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc29tgAG_4kNWR047nGktvZDca-kte0XJb1OHAg7mX0pcnYHK_qFOXGM8gQjSADkNvUAdSy8d1Ki6e_C9lblxW8XF-9ftMcEv_lSfQdeA8Tz8UcwcsjQXLw1YLaQOfb5vbqPwAfZnyhObQahsH7XdeVsLarFl97ktEUgABU9j69U0LHJkx_SELNgah1mwu3IfQmR4ayPoqejype5IlfuYu78cP9vMSSWGuhEcfLdjEm7i0vJ1AswG7ep3_JolOKA93ewaSvaoImtY"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- FOTO 5 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Celebración con invitados" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeP6P4rQ3bUXv4MP83fa--748pdQMYJwsq1FgPE_qxVPWzua09rmLHBCKdyUnbJSDQBk20yzEtXgTla_hwofxeAc9Hv_shqs1CFtyvUlcmZS0K2ttVuUF9lZVnG-wXy8KuNr2eFa_XzYKYTsU5OVFJLkI1U2LZIKdUWvOwK02vCIyfxh5NeYZplvxcC7LHv-trNQUTljr4ZoP_4BsfoqyDjCoq_yRsxZophL52eFh1J_IYoVwHvyMY2EcxKt6GpH-Un7MB6QwMXyQ"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- FOTO 6 DE BODA -->
+                    <div class="group relative overflow-hidden rounded-lg photo-item" onclick="openImageModal(this)">
+                        <!-- Imagen con efecto hover y zoom -->
+                        <img alt="Foto de boda - Retrato de los novios" 
+                             class="h-auto w-full transform transition-transform duration-300 group-hover:scale-105 cursor-pointer" 
+                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx-uFKPhcV9b6kaZjHAyNQQx_bEU4huQYG0IQJxAljGiWuh6dD_xWLTICwxYbF98TlDqEtPqD97R0-1GkH048hV1McjmmOMkf-2SECtupt95fxYdZvNu1ErsxQiyelbFNi4ydCaOJOPv_ai3nUvZqg9LUrRWARdhOjWEc6KPNQfESI61Q1yReofRornXraNUpWHi4uNLymvOHh_RXzOjwV6R2zud9_NSI7Lhswcawb4AqkntjZ0nQZu8XKOZkkWi7U94LNw2f2-Ic"/>
+                        <!-- Overlay oscuro que aparece al hacer hover -->
+                        <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100"></div>
+                    </div>
+                    
+                    <!-- AQUÍ PUEDES AGREGAR MÁS FOTOS -->
+                    <!-- Para agregar una nueva foto, copia la estructura anterior y cambia:
+                         - El src de la imagen
+                         - El alt descriptivo
+                         - Mantén el onclick="openImageModal(this)" para el modal -->
+                    
+                </div>
+            </main>
+            
+            <!-- BOTÓN DE CONTACTO POR WHATSAPP -->
+            <div class="p-4" style="padding-bottom: 80px;">
+                <!-- Botón verde de WhatsApp con enlace personalizable -->
+                <a class="flex w-full items-center justify-center gap-2 rounded-full bg-green-500 px-6 py-3 text-white shadow-lg transition-transform hover:scale-105" 
+                   href="https://wa.me/573124167936?text=¡Hola%20Foto%20Castro!%20👰🤵%20Me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20de%20fotografía%20para%20bodas.%20Me%20gustaría%20obtener%20información%20sobre%20paquetes,%20precios%20y%20disponibilidad.%20¡Espero%20su%20respuesta!%20✨">
+                    <!-- Icono de WhatsApp -->
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                    </svg>
+                    <!-- Texto del botón (puedes modificar este texto) -->
+                    <span class="font-bold">Contactar por WhatsApp</span>
+                </a>
+            </div>
+        </div>
+            
+            <!-- FOOTER - Navegación inferior fija -->
+            <footer class="fixed bottom-0 left-0 right-0 bg-[var(--background-primary)] border-t border-[var(--border-color)] z-50" style="box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);">
+                <!-- Navegación con iconos en la parte inferior -->
+                <nav class="flex justify-around items-center px-4 pt-2 pb-3">
+                    
+                    <!-- ICONO DE INICIO -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="../index.html">
+                        <span class="material-symbols-outlined">home</span>
+                        <p class="text-xs font-medium">Inicio</p>
+                    </a>
+                    
+                    <!-- ICONO DE CATEGORÍAS (activo - color rojo) -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--primary-color)]" href="categorias.html">
+                        <span class="material-symbols-outlined filled">photo_library</span>
+                        <p class="text-xs font-bold">Categorías</p>
+                    </a>
+                    
+                    <!-- ICONO DE TRABAJOS -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="verificar-trabajo.html">
+                        <span class="material-symbols-outlined">work</span>
+                        <p class="text-xs font-medium">Trabajos</p>
+                    </a>
+                    
+                    <!-- ICONO DE CONTACTO -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="contacto.html">
+                        <span class="material-symbols-outlined">mail</span>
+                        <p class="text-xs font-medium">Contacto</p>
+                    </a>
+                    
+                    <!-- ICONO DE CONÓCENOS -->
+                    <a class="flex flex-col items-center gap-1 text-[var(--text-secondary)]" href="acerca-de.html">
+                        <span class="material-symbols-outlined">info</span>
+                        <p class="text-xs font-medium">Conócenos</p>
+                    </a>
+                    
+                
+                </nav>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA VER IMÁGENES EN TAMAÑO COMPLETO -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+        <!-- Botón para cerrar el modal -->
+        <button onclick="closeImageModal()" class="absolute top-4 right-4 text-white text-3xl z-10">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        
+        <!-- Imagen en tamaño completo -->
+        <img id="modalImage" class="max-w-full max-h-full object-contain" src="" alt="">
+        
+        <!-- Controles de navegación (opcional) -->
+        <button onclick="previousImage()" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button onclick="nextImage()" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+    </div>
+    
+    <!-- JavaScript personalizado para la galería -->
+    <script src="../js/main.js"></script>
+    <script>
+        /* ============================================
+           JAVASCRIPT ESPECÍFICO PARA GALERÍA DE BODAS
+           ============================================ */
+        
+        let currentImageIndex = 0;
+        let galleryImages = [];
+        
+        // Función para regresar a la página de categorías
+        function goBackToCategories() {
+            window.location.href = 'categorias.html';
+        }
+        
+        // Función para abrir el modal de imagen
+        function openImageModal(element) {
+            const img = element.querySelector('img');
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            
+            // Configurar la imagen en el modal
+            modalImage.src = img.src;
+            modalImage.alt = img.alt;
+            
+            // Mostrar el modal
+            modal.classList.remove('hidden');
+            
+            // Encontrar el índice de la imagen actual
+            currentImageIndex = Array.from(document.querySelectorAll('.photo-item')).indexOf(element);
+            
+            // Actualizar array de imágenes
+            updateGalleryImages();
+        }
+        
+        // Función para cerrar el modal
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+        }
+        
+        // Función para actualizar el array de imágenes
+        function updateGalleryImages() {
+            galleryImages = Array.from(document.querySelectorAll('.photo-item img')).map(img => ({
+                src: img.src,
+                alt: img.alt
+            }));
+        }
+        
+        // Función para ver imagen anterior
+        function previousImage() {
+            if (galleryImages.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = galleryImages[currentImageIndex].src;
+            modalImage.alt = galleryImages[currentImageIndex].alt;
+        }
+        
+        // Función para ver imagen siguiente
+        function nextImage() {
+            if (galleryImages.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = galleryImages[currentImageIndex].src;
+            modalImage.alt = galleryImages[currentImageIndex].alt;
+        }
+        
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeImageModal();
+            } else if (event.key === 'ArrowLeft') {
+                previousImage();
+            } else if (event.key === 'ArrowRight') {
+                nextImage();
+            }
+        });
+        
+        // Animaciones de entrada para las fotos
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Galería de Bodas cargada');
+            
+            // Inicializar array de imágenes
+            updateGalleryImages();
+            
+            // Animación escalonada para las fotos
+            const photoItems = document.querySelectorAll('.photo-item');
+            photoItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100); // Retraso escalonado
+            });
+        });
+        
+        /* ============================================
+           FUNCIONES PARA PERSONALIZAR
+           ============================================ */
+        
+        // Función para cambiar el número de WhatsApp
+        // Modifica la URL en el enlace de WhatsApp arriba (línea ~95)
+        // Cambia TUNUMERO por tu número real, ejemplo: 573001234567
+        
+        // Función para agregar más fotos
+        // Copia la estructura de las fotos existentes y modifica:
+        // - src: URL de la nueva imagen
+        // - alt: Descripción de la imagen
+        // - Mantén onclick="openImageModal(this)" para el modal
+    </script>
+</body>
+</html>
